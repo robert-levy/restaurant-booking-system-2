@@ -4,9 +4,8 @@
 - allow disability wheelchair access which 
   uses 2 seats on a table DONE
 - can free up seats when table leaves DONE
-
-- allow multiple bookings
-- allow multiple restaurants
+- allow multiple bookings DONE
+- allow multiple restaurants DONE
 
 
 improvements todo
