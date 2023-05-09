@@ -1,0 +1,26 @@
+[
+    {
+        "barSeatNumber": 1,
+        "availability": true
+    },
+    {
+        "barSeatNumber": 2,
+        "availability": true
+    },
+    {
+        "barSeatNumber": 3,
+        "availability": true
+    },
+    {
+        "barSeatNumber": 4,
+        "availability": true
+    },
+    {
+        "barSeatNumber": 5,
+        "availability": true
+    },
+    {
+        "barSeatNumber": 6,
+        "availability": true
+    }
+]

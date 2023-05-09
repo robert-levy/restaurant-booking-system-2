@@ -1,0 +1,64 @@
+[
+    {
+        "tableNumber": 1,
+        "seats": 2,
+        "availability": true
+
+    },
+    {
+        "tableNumber": 2,
+        "seats": 2,
+        "availability": true
+
+
+    },
+    {
+        "tableNumber": 3,
+        "seats": 2,
+        "availability": true
+
+
+    },
+    {
+        "tableNumber": 4,
+        "seats": 2,
+        "availability": true
+
+
+    },
+    {
+        "tableNumber": 5,
+        "seats": 4,
+        "availability": true
+
+
+    },
+    {
+        "tableNumber": 6,
+        "seats": 4,
+        "availability": true
+
+
+    },
+    {
+        "tableNumber": 7,
+        "seats": 4,
+        "availability": true
+
+
+    },
+    {
+        "tableNumber": 8,
+        "seats": 4,
+        "availability": true
+
+
+    },
+    {
+        "tableNumber": 9,
+        "seats": 6,
+        "availability": true
+
+
+    }
+]
