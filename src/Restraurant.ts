@@ -22,18 +22,25 @@ type BookTableType = IRestaurantTable | IBarSeat | IErrorNotFound;
 type BookBarSeatType = IBarSeat | IErrorNotFound;
 
 export default class Restaurant {
-  private branch: string;
+  private _branch!: string; // Definite Assignment Assertions: assert that this variable will be assigned
   private tables: IRestaurantTable[];
   private bar: IBarSeat[];
 
   constructor(branch = "", tables: IRestaurantTable[], bar: IBarSeat[]) {
-    this.branch = branch;
-    this.tables = tables;
-    this.bar = bar;
+    this._branch = branch
+    this.tables = tables
+    this.bar = bar
     console.log('Initialized branch: '+this.branch)
     console.log(this.tables)
     console.log(this.bar)
+  }
 
+  set branch(branch: string){
+    this._branch = branch
+  }
+
+  get branch(){
+    return this._branch
   }
 
   bookTable({

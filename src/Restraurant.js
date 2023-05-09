@@ -1,15 +1,25 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var Restaurant = /** @class */ (function () {
     function Restaurant(branch, tables, bar) {
         if (branch === void 0) { branch = ""; }
-        this.branch = branch;
+        this._branch = branch;
         this.tables = tables;
         this.bar = bar;
         console.log('Initialized branch: ' + this.branch);
         console.log(this.tables);
         console.log(this.bar);
     }
+    Object.defineProperty(Restaurant.prototype, "branch", {
+        get: function () {
+            return this._branch;
+        },
+        set: function (branch) {
+            this._branch = branch;
+        },
+        enumerable: false,
+        configurable: true
+    });
     Restaurant.prototype.bookTable = function (_a) {
         var totalPersons = _a.totalPersons, _b = _a.personsWithDisability, personsWithDisability = _b === void 0 ? 0 : _b;
         // step 1: check how many seats are required. People with disabilities need two seats worth of space. Singles should use the bar.
@@ -33,7 +43,7 @@ var Restaurant = /** @class */ (function () {
         }
         // otherwise no table found
         return {
-            errorMsg: "No spaces available for required spaces right now"
+            errorMsg: "No spaces available for required spaces right now",
         };
     };
     Restaurant.prototype.bookBarSeat = function () {
@@ -46,7 +56,7 @@ var Restaurant = /** @class */ (function () {
             return barSeat;
         }
         return {
-            errorMsg: "No spaces available for required spaces right now"
+            errorMsg: "No spaces available for required spaces right now",
         };
     };
     Restaurant.prototype.makeTableAvailable = function (availableTable) {
@@ -65,4 +75,4 @@ var Restaurant = /** @class */ (function () {
     };
     return Restaurant;
 }());
-exports["default"] = Restaurant;
+exports.default = Restaurant;
