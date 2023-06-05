@@ -3,62 +3,45 @@
         "tableNumber": 1,
         "seats": 2,
         "availability": "available"
-
     },
     {
         "tableNumber": 2,
         "seats": 2,
         "availability": "available"
-
-
     },
     {
         "tableNumber": 3,
         "seats": 2,
         "availability": "available"
-
-
     },
     {
         "tableNumber": 4,
         "seats": 2,
         "availability": "available"
-
-
     },
     {
         "tableNumber": 5,
         "seats": 4,
         "availability": "available"
-
-
     },
     {
         "tableNumber": 6,
         "seats": 4,
         "availability": "available"
-
-
     },
     {
         "tableNumber": 7,
         "seats": 4,
         "availability": "available"
-
-
     },
     {
         "tableNumber": 8,
         "seats": 4,
         "availability": "available"
-
-
     },
     {
         "tableNumber": 9,
         "seats": 6,
         "availability": "available"
-
-
     }
 ]

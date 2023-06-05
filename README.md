@@ -13,7 +13,7 @@ improvements todo
 - Cover all error cases
 - Write unit tests using Jest
 - make a simple UI to interact with the app
-- Return both table number and seat numbers
-- Support mass bookings where two or more tables are required
-- Can support groups arriving at 5 minutes intervals and staying for either 1 or 2 hours
+- Return both table number and seat numbers !
+- Support mass bookings where two or more tables are required !
+- Can support groups arriving at 5 minutes intervals and staying for either 1 or 2 hours !
   - Give an estimated waiting time if the restaurant is full

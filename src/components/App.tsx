@@ -1,9 +1,37 @@
-import React from 'react'
+import React, { useState } from "react";
+import { DataProvider } from "../context/DataContext";
+import Header from "./Header/Header";
+import FormSection from "./FormSection/FormSection";
+import RestaurantContainer from "../containers/RestaurantContainer";
+import RestaurantFoyer from "./RestaurantFoyer/RestaurantFoyer";
+import styled from "@emotion/styled";
+import WelcomeModal from "./WelcomeScreen/WelcomeScreen";
+
+const Wrapper = styled.div`
+  background-color: #d1a7ff;
+  padding: 10% 15%;
+`;
 
 const App = () => {
+  const [branchName, setBranchName] = useState("");
   return (
-    <div>App</div>
-  )
-}
+    <Wrapper>
+      <DataProvider>
+        {!branchName ? (
+          <WelcomeModal setBranchName={setBranchName} />
+        ) : (
+          <>
+            <Header />
 
-export default App
+            <RestaurantContainer>
+              <FormSection />
+              <RestaurantFoyer branchName={branchName} />
+            </RestaurantContainer>
+          </>
+        )}
+      </DataProvider>
+    </Wrapper>
+  );
+};
+
+export default App;
