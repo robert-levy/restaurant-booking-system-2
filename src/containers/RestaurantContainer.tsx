@@ -1,12 +1,8 @@
-import React, {useState} from 'react'
+import React from 'react'
 import ErrorModal from "../components/ErrorModal/ErrorModal";
 import { useDataDispatch } from "../context/DataContext";
 
-interface RestaurantContainerProps {
-  children: React.ReactNode;
-}
-
-const RestaurantContainer = ({ children }: RestaurantContainerProps) => {
+const RestaurantContainer = ({ children }: {children: React.ReactNode}) => {
   const { state } = useDataDispatch();
 
   return (

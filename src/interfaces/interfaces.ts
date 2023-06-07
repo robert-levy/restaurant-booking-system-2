@@ -17,9 +17,11 @@ export interface IBarSeat {
   export interface State {
     bar: IBarSeat[] | [];
     tables: IRestaurantTable[] | [];
-    errorMessage?: string; // can narrow this done to list of errors
+    errorMessage?: string; // can narrow this down to list of errors
   }
 
   export interface ErrorResponse {
     errorMessage: string;
   }
+
+export type ICardType = 'tables' | 'bar'

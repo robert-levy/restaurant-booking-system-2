@@ -21,9 +21,9 @@ export var makeBooking = function (totalPersons, personsWithDisability) { return
         personsWithDisability: personsWithDisability,
     },
 }); };
-export var makeTableAvailable = function (tableNumber) { return ({
+export var makeTableAvailable = function (spaceNumber, type) { return ({
     type: ActionTypes.MAKE_TABLE_AVAILABLE,
-    payload: tableNumber,
+    payload: { spaceNumber: spaceNumber, type: type },
 }); };
 export var acknowledgeError = function () { return ({
     type: ActionTypes.ACKNOWLEDGE_ERROR

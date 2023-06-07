@@ -44,7 +44,7 @@ export default function ErrorModal({ errorMessage }: ErrorModalInterface) {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             {errorMessage}
           </Typography>
-          <Button variant="contained" color="error" onClick={handleClose}>
+          <Button variant="contained" color="error" onClick={handleClose} style={{marginTop:20}}>
             Okay
           </Button>
         </Box>

@@ -32,6 +32,7 @@ const FormWrapper = styled.form`
   justify-content: center;
   position: relative;
   top: 10%;
+  gap:20px;
   @media (max-width: 350px) {
     flex-direction: column;
   }
@@ -77,7 +78,7 @@ const WelcomeModal: React.FC<IWelcomeModal> = ({
             required
             id="restaurant-name-field"
             label="Required"
-            defaultValue="branch-1"
+            defaultValue="Nandos Shoreditch"
           />
           <IconButton aria-label="CheckCircleIcon" type="submit">
             <CheckCircleIcon color="secondary" fontSize="large" />

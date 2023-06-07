@@ -4,7 +4,13 @@ import {
   IBarSeat,
   IRestaurantTable,
   ErrorResponse,
+  ICardType,
 } from "./interfaces/interfaces";
+
+interface IMakeTableAvailable {
+  spaceNumber: number,
+  type: ICardType
+}
 
 export interface IRestaurant {
   makeBooking(state: State, request: IBookingRequest): State | ErrorResponse;
@@ -15,7 +21,7 @@ export interface IRestaurant {
   ): IRestaurantTable[] | ErrorResponse;
   makeTableAvailable(
     tables: IRestaurantTable[],
-    tableNumber: number
+    payload: IMakeTableAvailable
   ): IRestaurantTable[];
   makeBarSeatAvailable(bar: IBarSeat[], barSeatNumber: number): IBarSeat[];
   totalTableSeats(tables: IRestaurantTable[]): Number;
@@ -125,11 +131,11 @@ export default class Restaurant implements IRestaurant {
 
   makeTableAvailable(
     tables: IRestaurantTable[],
-    tableNumber: number
+    {spaceNumber, type}: IMakeTableAvailable
   ): IRestaurantTable[] {
     const updatedTablesState = [...tables];
     let foundTable = updatedTablesState.find(
-      (table) => table.tableNumber === tableNumber
+      (table) => table.tableNumber === spaceNumber
     );
     if (foundTable) {
       foundTable.availability = "available";

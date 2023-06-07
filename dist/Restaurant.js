@@ -94,9 +94,10 @@ var Restaurant = /** @class */ (function () {
         // No barSeat available
         return { errorMessage: "No bar seats available" };
     };
-    Restaurant.prototype.makeTableAvailable = function (tables, tableNumber) {
+    Restaurant.prototype.makeTableAvailable = function (tables, _a) {
+        var spaceNumber = _a.spaceNumber, type = _a.type;
         var updatedTablesState = __spreadArray([], tables);
-        var foundTable = updatedTablesState.find(function (table) { return table.tableNumber === tableNumber; });
+        var foundTable = updatedTablesState.find(function (table) { return table.tableNumber === spaceNumber; });
         if (foundTable) {
             foundTable.availability = "available";
         }

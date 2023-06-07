@@ -15,7 +15,7 @@ var __assign = (this && this.__assign) || function () {
 };
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import React from "react";
-import { Card, Grid, Typography, IconButton, Menu, MenuItem, } from "@mui/material";
+import { Grid, Typography, IconButton, Menu, MenuItem, } from "@mui/material";
 import TableBarIcon from "@mui/icons-material/TableBar";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { ReactComponent as BarStoolIcon } from '../../assets/bar-chair.svg';
@@ -32,7 +32,7 @@ var TableIcon = function () { return (_jsx(TableBarIcon, { style: {
         marginRight: "5px",
     } }, void 0)); };
 var BarSeatIcon = function () { return (_jsx(BarStoolIcon, {}, void 0)); };
-var TableCard = function (_a) {
+var Card = function (_a) {
     var availability = _a.availability, tableNumber = _a.tableNumber, seats = _a.seats, type = _a.type;
     var _b = React.useState(null), anchorEl = _b[0], setAnchorEl = _b[1];
     var dispatch = useDataDispatch().dispatch;
@@ -56,5 +56,5 @@ var TableCard = function (_a) {
                                 "aria-labelledby": "basic-button",
                             } }, { children: [_jsx(MenuItem, __assign({ onClick: handleMakeAvailable }, { children: "Make Available" }), void 0), _jsx(MenuItem, __assign({ onClick: handleClose }, { children: "Make Out of Order" }), void 0), _jsx(MenuItem, __assign({ onClick: handleClose }, { children: "Make Reserved" }), void 0)] }), void 0)] }), void 0), _jsx(Grid, __assign({ item: true, xs: 12, style: { display: "flex", justifyContent: "center" } }, { children: _jsxs(CardTypography, __assign({ fontSize: ".8em" }, { children: [seats, " seats"] }), void 0) }), void 0), _jsx(Grid, __assign({ item: true, xs: 12, style: { display: "flex", justifyContent: "center" } }, { children: _jsx(CardTypography, __assign({ align: "center", fontSize: ".8em" }, { children: availability }), void 0) }), void 0)] }), void 0) }), void 0));
 };
-export default TableCard;
+export default Card;
 var templateObject_1, templateObject_2, templateObject_3;

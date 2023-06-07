@@ -13,7 +13,7 @@ import { useDataDispatch } from "../../context/DataContext";
 import { makeBooking } from "../../context/dataActions";
 
 const StyledPaper = styled(Paper)`
-  height: 25vh;
+  height: auto;
   background: #eee;
   padding: 5% 5%;
   gap: 5%;
@@ -21,6 +21,18 @@ const StyledPaper = styled(Paper)`
 
 const FormWrapper = styled.div`
   display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  @media (max-width: 1000px) {
+    flex-direction:column;
+    align-items: center;
+    padding: 20px;
+  }
+`;
+
+const StyledTextField = styled(TextField)`
+  max-width: 300px;
 `;
 
 const FormSection = () => {
@@ -35,8 +47,8 @@ const FormSection = () => {
     <StyledPaper elevation={1}>
       <Typography variant="h5">New Booking</Typography>
       <Divider style={{ margin: "2% 5%" }} />
-      <FormWrapper /*onSubmit={handleSubmit}*/>
-        <TextField
+      <FormWrapper>
+        <StyledTextField
           id=""
           select
           required
@@ -51,8 +63,8 @@ const FormSection = () => {
               {option}
             </MenuItem>
           ))}
-        </TextField>
-        <TextField
+        </StyledTextField>
+        <StyledTextField
           id=""
           select
           label="Persons with a Disability"
@@ -67,7 +79,7 @@ const FormSection = () => {
               {option}
             </MenuItem>
           ))}
-        </TextField>
+        </StyledTextField>
 
         <IconButton aria-label="CheckCircleIcon" onClick={handleSubmit}>
           <CheckCircleIcon color="secondary" fontSize="large" />

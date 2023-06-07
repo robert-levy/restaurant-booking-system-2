@@ -1,4 +1,5 @@
 import { State, IBookingRequest } from "../interfaces/interfaces";
+import { ICardType } from "../interfaces/interfaces";
 
 export const initialState: State = {
   bar: [],
@@ -24,7 +25,10 @@ interface MakeBookingAction {
 
 interface MakeTableAvailableAction {
   type: ActionTypes.MAKE_TABLE_AVAILABLE;
-  payload: number;
+  payload: {
+    spaceNumber: number,
+    type: ICardType
+  };
 }
 
 interface AcknowledgeErrorAction {
@@ -55,10 +59,11 @@ export const makeBooking = (
 });
 
 export const makeTableAvailable = (
-  tableNumber: number
+  spaceNumber: number,
+  type: ICardType
 ): MakeTableAvailableAction => ({
   type: ActionTypes.MAKE_TABLE_AVAILABLE,
-  payload: tableNumber,
+  payload: {spaceNumber, type},
 });
 
 export const acknowledgeError = (): AcknowledgeErrorAction => ({
