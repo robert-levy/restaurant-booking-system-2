@@ -14,7 +14,7 @@ interface IchangeSeatingStatus {
 
 export interface IRestaurant {
   makeBooking(state: State, request: IBookingRequest): State | ErrorResponse;
-  bookBarSeat(state: IBarSeat[]): IBarSeat[] | ErrorResponse;
+  bookBarSeat(state: State):State | ErrorResponse;
   bookTable(state: State, seatsRequired: number): State | ErrorResponse;
   changeSeatingStatus<SeatingArray extends IRestaurantTable[] | IBarSeat[]>(
     seatingState: SeatingArray,
@@ -37,13 +37,13 @@ export default class Restaurant implements IRestaurant {
     if (seatsRequired === 1) {
       //TODO: I DONT NEED TO CHECK THIS. COULD JUST INCLUDE SEARCH WITH THE TABLES + BAR SEATS
       // Try book bar seat for single person
-      const updatedBarState = this.bookBarSeat(state.bar);
+      const updatedState = this.bookBarSeat(state);
 
-      if (isErrorResponse(updatedBarState)) {
-        const { errorMessage } = updatedBarState;
+      if (isErrorResponse(updatedState?.errorMessage)) {
+        const { errorMessage } = updatedState;
         return { errorMessage };
       }
-      return { ...state, bar: updatedBarState };
+      return updatedState;
     }
     // Book table
     const updatedState = this.bookTable(state, seatsRequired);
@@ -93,15 +93,19 @@ export default class Restaurant implements IRestaurant {
     };
   }
 
-  bookBarSeat(barState: IBarSeat[]): IBarSeat[] | ErrorResponse {
-    const updatedBarState = [...barState];
+  bookBarSeat(state: State): State | ErrorResponse {
+    const updatedBarState = [...state.bar];
     const seatToChange = updatedBarState.find(
       (barSeat) => barSeat.availability === "available"
     );
 
     if (seatToChange) {
       seatToChange.availability = Availability.Unavailable;
-      return updatedBarState;
+      return {
+        ...state,
+        bar: updatedBarState,
+        successMessage: `Successfully booked bar seat ${seatToChange.barSeatNumber}`,
+      };
     }
     // No barSeat available
     return { errorMessage: "No bar seats available" };

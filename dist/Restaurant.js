@@ -37,12 +37,12 @@ var Restaurant = /** @class */ (function () {
         if (seatsRequired === 1) {
             //TODO: I DONT NEED TO CHECK THIS. COULD JUST INCLUDE SEARCH WITH THE TABLES + BAR SEATS
             // Try book bar seat for single person
-            var updatedBarState = this.bookBarSeat(state.bar);
-            if (isErrorResponse(updatedBarState)) {
-                var errorMessage = updatedBarState.errorMessage;
+            var updatedState_1 = this.bookBarSeat(state);
+            if (isErrorResponse(updatedState_1 === null || updatedState_1 === void 0 ? void 0 : updatedState_1.errorMessage)) {
+                var errorMessage = updatedState_1.errorMessage;
                 return { errorMessage: errorMessage };
             }
-            return __assign(__assign({}, state), { bar: updatedBarState });
+            return updatedState_1;
         }
         // Book table
         var updatedState = this.bookTable(state, seatsRequired);
@@ -76,12 +76,12 @@ var Restaurant = /** @class */ (function () {
             errorMessage: "No single table can fulfill booking. Either use multiple tables with custom booking or offer waiting time til next available table",
         };
     };
-    Restaurant.prototype.bookBarSeat = function (barState) {
-        var updatedBarState = __spreadArray([], barState, true);
+    Restaurant.prototype.bookBarSeat = function (state) {
+        var updatedBarState = __spreadArray([], state.bar, true);
         var seatToChange = updatedBarState.find(function (barSeat) { return barSeat.availability === "available"; });
         if (seatToChange) {
             seatToChange.availability = Availability.Unavailable;
-            return updatedBarState;
+            return __assign(__assign({}, state), { bar: updatedBarState, successMessage: "Successfully booked bar seat ".concat(seatToChange.barSeatNumber) });
         }
         // No barSeat available
         return { errorMessage: "No bar seats available" };
