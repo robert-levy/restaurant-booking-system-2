@@ -15,10 +15,7 @@ interface IchangeSeatingStatus {
 export interface IRestaurant {
   makeBooking(state: State, request: IBookingRequest): State | ErrorResponse;
   bookBarSeat(state: IBarSeat[]): IBarSeat[] | ErrorResponse;
-  bookTable(
-    tables: IRestaurantTable[],
-    seatsRequired: number
-  ): IRestaurantTable[] | ErrorResponse;
+  bookTable(state: State, seatsRequired: number): State | ErrorResponse;
   changeSeatingStatus<SeatingArray extends IRestaurantTable[] | IBarSeat[]>(
     seatingState: SeatingArray,
     payload: IchangeSeatingStatus
@@ -49,21 +46,18 @@ export default class Restaurant implements IRestaurant {
       return { ...state, bar: updatedBarState };
     }
     // Book table
-    const updatedTablesState = this.bookTable(state.tables, seatsRequired);
+    const updatedState = this.bookTable(state, seatsRequired);
 
-    if (isErrorResponse(updatedTablesState)) {
-      const { errorMessage } = updatedTablesState;
+    if (isErrorResponse(updatedState?.errorMessage)) {
+      const { errorMessage } = updatedState;
       return { errorMessage };
     }
 
-    return { ...state, tables: updatedTablesState, successMessage:"Successfull booking" };
+    return updatedState;
   }
 
-  bookTable(
-    tablesState: IRestaurantTable[],
-    seatsRequired: number
-  ): IRestaurantTable[] | ErrorResponse {
-    const updatedTablesState = [...tablesState];
+  bookTable(state: State, seatsRequired: number): State | ErrorResponse {
+    const updatedTablesState = [...state.tables];
 
     // check not all tables are taken
     if (this.isTablesFullyBooked(updatedTablesState)) {
@@ -79,9 +73,12 @@ export default class Restaurant implements IRestaurant {
 
     if (availableTable) {
       availableTable.availability = Availability.Unavailable;
-      console.log(updatedTablesState);
-      
-      return updatedTablesState;
+
+      return {
+        ...state,
+        tables: updatedTablesState,
+        successMessage: `Successfully booked table ${availableTable.tableNumber}`,
+      };
     }
 
     // If seatsRequired < total number of seats left , offer bar seats (for now just error not enough tables for booking)
@@ -90,7 +87,10 @@ export default class Restaurant implements IRestaurant {
     }
 
     // No one table large enough available, either merge tables or offer wait time
-    return({errorMessage: "No single table can fulfill booking. Either use multiple tables with custom booking or offer waiting time til next available table"})
+    return {
+      errorMessage:
+        "No single table can fulfill booking. Either use multiple tables with custom booking or offer waiting time til next available table",
+    };
   }
 
   bookBarSeat(barState: IBarSeat[]): IBarSeat[] | ErrorResponse {

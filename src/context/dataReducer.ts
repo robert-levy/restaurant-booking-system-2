@@ -22,7 +22,7 @@ const reducer = (state: State, action: Action): State => {
           errorMessage,
         };
       }      
-      return { ...updatedState };
+      return updatedState ;
 
     case ActionTypes.CHANGE_SEATING_STATUS:
       const { type, spaceNumber, newStatus } = action.payload;

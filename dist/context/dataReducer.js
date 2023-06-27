@@ -25,7 +25,7 @@ var reducer = function (state, action) {
                 var errorMessage = updatedState.errorMessage;
                 return __assign(__assign({}, state), { errorMessage: errorMessage });
             }
-            return __assign({}, updatedState);
+            return updatedState;
         case ActionTypes.CHANGE_SEATING_STATUS:
             var _b = action.payload, type = _b.type, spaceNumber = _b.spaceNumber, newStatus = _b.newStatus;
             var seatingState = type === "tables" ? state.tables : state.bar;

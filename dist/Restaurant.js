@@ -45,15 +45,15 @@ var Restaurant = /** @class */ (function () {
             return __assign(__assign({}, state), { bar: updatedBarState });
         }
         // Book table
-        var updatedTablesState = this.bookTable(state.tables, seatsRequired);
-        if (isErrorResponse(updatedTablesState)) {
-            var errorMessage = updatedTablesState.errorMessage;
+        var updatedState = this.bookTable(state, seatsRequired);
+        if (isErrorResponse(updatedState === null || updatedState === void 0 ? void 0 : updatedState.errorMessage)) {
+            var errorMessage = updatedState.errorMessage;
             return { errorMessage: errorMessage };
         }
-        return __assign(__assign({}, state), { tables: updatedTablesState, successMessage: "Successfull booking" });
+        return updatedState;
     };
-    Restaurant.prototype.bookTable = function (tablesState, seatsRequired) {
-        var updatedTablesState = __spreadArray([], tablesState, true);
+    Restaurant.prototype.bookTable = function (state, seatsRequired) {
+        var updatedTablesState = __spreadArray([], state.tables, true);
         // check not all tables are taken
         if (this.isTablesFullyBooked(updatedTablesState)) {
             return { errorMessage: "All tables fully booked" };
@@ -65,15 +65,16 @@ var Restaurant = /** @class */ (function () {
         });
         if (availableTable) {
             availableTable.availability = Availability.Unavailable;
-            console.log(updatedTablesState);
-            return updatedTablesState;
+            return __assign(__assign({}, state), { tables: updatedTablesState, successMessage: "Successfully booked table ".concat(availableTable.tableNumber) });
         }
         // If seatsRequired < total number of seats left , offer bar seats (for now just error not enough tables for booking)
         if (seatsRequired > this.totalTableSeats(updatedTablesState)) {
             return { errorMessage: "Not enough tables to fulfill booking" };
         }
         // No one table large enough available, either merge tables or offer wait time
-        return ({ errorMessage: "No single table can fulfill booking. Either use multiple tables with custom booking or offer waiting time til next available table" });
+        return {
+            errorMessage: "No single table can fulfill booking. Either use multiple tables with custom booking or offer waiting time til next available table",
+        };
     };
     Restaurant.prototype.bookBarSeat = function (barState) {
         var updatedBarState = __spreadArray([], barState, true);
