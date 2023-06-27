@@ -1,4 +1,4 @@
-export var initialState = {
+export const initialState = {
     bar: [],
     tables: [],
 };
@@ -11,24 +11,24 @@ export var ActionTypes;
     ActionTypes["ACKNOWLEDGE_SUCCESS"] = "ACKNOWLEDGE_SUCCESS";
 })(ActionTypes || (ActionTypes = {}));
 /// Actions
-export var createRestaurant = function (initState) { return ({
+export const createRestaurant = (initState) => ({
     type: ActionTypes.CREATE_RESTAURANT,
     payload: initState,
-}); };
-export var makeBooking = function (totalPersons, personsWithDisability) { return ({
+});
+export const makeBooking = (totalPersons, personsWithDisability) => ({
     type: ActionTypes.MAKE_BOOKING,
     payload: {
-        totalPersons: totalPersons,
-        personsWithDisability: personsWithDisability,
+        totalPersons,
+        personsWithDisability,
     },
-}); };
-export var changeSeatingStatus = function (spaceNumber, type, newStatus) { return ({
+});
+export const changeSeatingStatus = (spaceNumber, type, newStatus) => ({
     type: ActionTypes.CHANGE_SEATING_STATUS,
-    payload: { spaceNumber: spaceNumber, type: type, newStatus: newStatus },
-}); };
-export var acknowledgeError = function () { return ({
+    payload: { spaceNumber, type, newStatus },
+});
+export const acknowledgeError = () => ({
     type: ActionTypes.ACKNOWLEDGE_ERROR
-}); };
-export var acknowledgeSuccess = function () { return ({
+});
+export const acknowledgeSuccess = () => ({
     type: ActionTypes.ACKNOWLEDGE_SUCCESS
-}); };
+});

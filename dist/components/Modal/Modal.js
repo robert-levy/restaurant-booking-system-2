@@ -6,7 +6,7 @@ import { acknowledgeError, acknowledgeSuccess } from "../../context/dataActions"
 import { useDataDispatch } from "../../context/DataContext";
 import { Button } from "@mui/material";
 import { ModalType } from "../../interfaces/interfaces";
-var style = {
+const style = {
     position: "absolute",
     top: "50%",
     left: "50%",
@@ -23,22 +23,20 @@ var ButtonColorProp;
     ButtonColorProp["Success"] = "success";
     ButtonColorProp["Error"] = "error";
 })(ButtonColorProp || (ButtonColorProp = {}));
-export default function Modal(_a) {
-    var _b;
-    var message = _a.message, modalType = _a.modalType;
-    var dispatch = useDataDispatch().dispatch;
-    var modalTypeConfig = (_b = {},
-        _b[ModalType.Success] = {
+export default function Modal({ message, modalType }) {
+    const { dispatch } = useDataDispatch();
+    const modalTypeConfig = {
+        [ModalType.Success]: {
             title: "Success",
             buttonColorProp: ButtonColorProp.Success,
-            handler: function () { return dispatch(acknowledgeSuccess()); }
+            handler: () => dispatch(acknowledgeSuccess())
         },
-        _b[ModalType.Error] = {
+        [ModalType.Error]: {
             title: "Error Occured",
             buttonColorProp: ButtonColorProp.Error,
-            handler: function () { return dispatch(acknowledgeError()); },
+            handler: () => dispatch(acknowledgeError()),
         },
-        _b);
-    var _c = modalTypeConfig[modalType], title = _c.title, handler = _c.handler, buttonColorProp = _c.buttonColorProp;
+    };
+    const { title, handler, buttonColorProp } = modalTypeConfig[modalType];
     return (_jsx("div", { children: _jsx(MUIModal, { open: true, onClose: handler, "aria-labelledby": "modal-modal-title", "aria-describedby": "modal-modal-description", children: _jsxs(Box, { sx: style, children: [_jsx(Typography, { id: "modal-modal-title", variant: "h6", component: "h2", children: title }), _jsx(Typography, { id: "modal-modal-description", sx: { mt: 2 }, children: message }), _jsx(Button, { variant: "contained", color: buttonColorProp, onClick: handler, style: { marginTop: 20 }, children: "Okay" })] }) }) }));
 }

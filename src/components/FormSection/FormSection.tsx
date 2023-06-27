@@ -25,7 +25,7 @@ const FormWrapper = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   @media (max-width: 1000px) {
-    flex-direction:column;
+    flex-direction: column;
     align-items: center;
     padding: 20px;
   }
@@ -39,8 +39,19 @@ const FormSection = () => {
   const { dispatch } = useDataDispatch();
   const [totalPersons, setTotalPersons] = useState(2);
   const [personsWithDisability, setPersonsWithDisability] = useState(0);
+  const [personsWithDisabilityInputs, setPersonsWithDisabilityInputs] =
+    useState([0, 1, 2]);
+
   const handleSubmit = () => {
     dispatch(makeBooking(totalPersons, personsWithDisability));
+  };
+
+  const handleTotalPersonsOnChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const totalPersons = +(e.target.value)
+    setTotalPersons(totalPersons);
+    setPersonsWithDisabilityInputs( [...Array(totalPersons + 1).keys()]);
   };
 
   return (
@@ -56,9 +67,9 @@ const FormSection = () => {
           fullWidth
           color="secondary"
           value={totalPersons}
-          onChange={(e) => setTotalPersons(Number(e.target.value))}
+          onChange={(e) => handleTotalPersonsOnChange(e)}
         >
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((option, index) => (
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((option, index) => (
             <MenuItem key={index} value={option}>
               {option}
             </MenuItem>
@@ -74,7 +85,7 @@ const FormSection = () => {
           value={personsWithDisability}
           onChange={(e) => setPersonsWithDisability(Number(e.target.value))}
         >
-          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((option, index) => (
+          {personsWithDisabilityInputs.map((option, index) => (
             <MenuItem key={index} value={option}>
               {option}
             </MenuItem>
