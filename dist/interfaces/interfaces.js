@@ -5,3 +5,8 @@ export var Availability;
     Availability["OutOfOrder"] = "out-of-order";
     Availability["Reserved"] = "reserved";
 })(Availability || (Availability = {}));
+export var ModalType;
+(function (ModalType) {
+    ModalType["Success"] = "success";
+    ModalType["Error"] = "error";
+})(ModalType || (ModalType = {}));

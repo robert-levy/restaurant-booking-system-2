@@ -8,6 +8,7 @@ export var ActionTypes;
     ActionTypes["MAKE_BOOKING"] = "MAKE_BOOKING";
     ActionTypes["CHANGE_SEATING_STATUS"] = "CHANGE_SEATING_STATUS";
     ActionTypes["ACKNOWLEDGE_ERROR"] = "ACKNOWLEDGE_ERROR";
+    ActionTypes["ACKNOWLEDGE_SUCCESS"] = "ACKNOWLEDGE_SUCCESS";
 })(ActionTypes || (ActionTypes = {}));
 /// Actions
 export var createRestaurant = function (initState) { return ({
@@ -27,4 +28,7 @@ export var changeSeatingStatus = function (spaceNumber, type, newStatus) { retur
 }); };
 export var acknowledgeError = function () { return ({
     type: ActionTypes.ACKNOWLEDGE_ERROR
+}); };
+export var acknowledgeSuccess = function () { return ({
+    type: ActionTypes.ACKNOWLEDGE_SUCCESS
 }); };

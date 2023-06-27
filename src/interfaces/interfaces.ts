@@ -25,10 +25,16 @@ export interface State {
   bar: IBarSeat[] | [];
   tables: IRestaurantTable[] | [];
   errorMessage?: string; // can narrow this down to list of errors
+  successMessage?: string
 }
 
 export interface ErrorResponse {
   errorMessage: string;
+}
+
+export enum ModalType {
+  Success = "success",
+  Error = "error"
 }
 
 export type ICardType = "tables" | "bar";

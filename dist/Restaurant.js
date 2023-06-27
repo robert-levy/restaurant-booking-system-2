@@ -34,7 +34,8 @@ var Restaurant = /** @class */ (function () {
         var seatsRequired = personsWithDisability === 0
             ? totalPersons
             : totalPersons + personsWithDisability;
-        if (seatsRequired === 1) { //TODO: I DONT NEED TO CHECK THIS. COULD JUST INCLUDE SEARCH WITH THE TABLES + BAR SEATS
+        if (seatsRequired === 1) {
+            //TODO: I DONT NEED TO CHECK THIS. COULD JUST INCLUDE SEARCH WITH THE TABLES + BAR SEATS
             // Try book bar seat for single person
             var updatedBarState = this.bookBarSeat(state.bar);
             if (isErrorResponse(updatedBarState)) {
@@ -49,7 +50,7 @@ var Restaurant = /** @class */ (function () {
             var errorMessage = updatedTablesState.errorMessage;
             return { errorMessage: errorMessage };
         }
-        return __assign(__assign({}, state), { tables: updatedTablesState });
+        return __assign(__assign({}, state), { tables: updatedTablesState, successMessage: "Successfull booking" });
     };
     Restaurant.prototype.bookTable = function (tablesState, seatsRequired) {
         var updatedTablesState = __spreadArray([], tablesState, true);
@@ -57,37 +58,22 @@ var Restaurant = /** @class */ (function () {
         if (this.isTablesFullyBooked(updatedTablesState)) {
             return { errorMessage: "All tables fully booked" };
         }
-        // find if there is a table that satifies the whole group
         // (tables should be sorted in order of number of seats, so first response will be the viable
         // table with the smallest amount of seats for the group)
-        var tableToChange = updatedTablesState.find(function (table) {
+        var availableTable = updatedTablesState.find(function (table) {
             return table.availability === "available" && table.seats >= seatsRequired;
         });
-        if (tableToChange) {
-            tableToChange.availability = Availability.Unavailable;
+        if (availableTable) {
+            availableTable.availability = Availability.Unavailable;
+            console.log(updatedTablesState);
             return updatedTablesState;
         }
         // If seatsRequired < total number of seats left , offer bar seats (for now just error not enough tables for booking)
         if (seatsRequired > this.totalTableSeats(updatedTablesState)) {
             return { errorMessage: "Not enough tables to fulfill booking" };
         }
-        // No table big enough to fit everyone, split them between tables
-        // Default behaviour: Find biggest table and assign that, subract seats number from seats Required,
-        // call bookTable again to either find a table or just provide the largest and recursive call again
-        var initialValue = updatedTablesState.find(function (table) { return table.availability === "available"; });
-        var largestAvailableTable = updatedTablesState.reduce(function (maxSeatsTable, currentTable) {
-            if ((!maxSeatsTable || currentTable.seats > maxSeatsTable.seats) &&
-                currentTable.availability === "available") {
-                return currentTable;
-            }
-            return maxSeatsTable;
-        }, initialValue // type assertion (we check for any undefined above)
-        );
-        var tableToBook = updatedTablesState.find(function (table) { return table.tableNumber === largestAvailableTable.tableNumber; }); // book table
-        tableToBook.availability = Availability.Unavailable;
-        seatsRequired -= largestAvailableTable.seats;
-        console.log("new seatsRequired: ", seatsRequired);
-        return this.bookTable(updatedTablesState, seatsRequired);
+        // No one table large enough available, either merge tables or offer wait time
+        return ({ errorMessage: "No single table can fulfill booking. Either use multiple tables with custom booking or offer waiting time til next available table" });
     };
     Restaurant.prototype.bookBarSeat = function (barState) {
         var updatedBarState = __spreadArray([], barState, true);
@@ -104,6 +90,7 @@ var Restaurant = /** @class */ (function () {
         var updatedSeatingState = __spreadArray([], seatingState, true);
         //@ts-ignore
         var foundSeating = updatedSeatingState.find(function (space) {
+            // this conditional runs for every table or seat in the array
             if (isRestaurantTable(space)) {
                 return space.tableNumber === spaceNumber;
             }

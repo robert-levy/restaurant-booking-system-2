@@ -10,6 +10,7 @@ export enum ActionTypes {
   MAKE_BOOKING = "MAKE_BOOKING",
   CHANGE_SEATING_STATUS = "CHANGE_SEATING_STATUS",
   ACKNOWLEDGE_ERROR = "ACKNOWLEDGE_ERROR",
+  ACKNOWLEDGE_SUCCESS = "ACKNOWLEDGE_SUCCESS"
 }
 
 interface CreateRestaurantAction {
@@ -35,11 +36,16 @@ interface AcknowledgeErrorAction {
   type: ActionTypes.ACKNOWLEDGE_ERROR;
 }
 
+interface AcknowledgeSuccessAction {
+  type: ActionTypes.ACKNOWLEDGE_SUCCESS
+}
+
 export type Action =
   | CreateRestaurantAction
   | MakeBookingAction
   | changeSeatingStatusAction
-  | AcknowledgeErrorAction;
+  | AcknowledgeErrorAction
+  | AcknowledgeSuccessAction
 
 /// Actions
 export const createRestaurant = (initState: State): CreateRestaurantAction => ({
@@ -69,4 +75,8 @@ export const changeSeatingStatus = (
 
 export const acknowledgeError = (): AcknowledgeErrorAction => ({
   type: ActionTypes.ACKNOWLEDGE_ERROR
+})
+
+export const acknowledgeSuccess = (): AcknowledgeSuccessAction => ({
+  type: ActionTypes.ACKNOWLEDGE_SUCCESS
 })

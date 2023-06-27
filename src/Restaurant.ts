@@ -8,8 +8,8 @@ import {
 } from "./interfaces/interfaces";
 
 interface IchangeSeatingStatus {
-  spaceNumber: number,
-  newStatus: Availability
+  spaceNumber: number;
+  newStatus: Availability;
 }
 
 export interface IRestaurant {
@@ -37,7 +37,8 @@ export default class Restaurant implements IRestaurant {
         ? totalPersons
         : totalPersons + personsWithDisability;
 
-    if (seatsRequired === 1) {        //TODO: I DONT NEED TO CHECK THIS. COULD JUST INCLUDE SEARCH WITH THE TABLES + BAR SEATS
+    if (seatsRequired === 1) {
+      //TODO: I DONT NEED TO CHECK THIS. COULD JUST INCLUDE SEARCH WITH THE TABLES + BAR SEATS
       // Try book bar seat for single person
       const updatedBarState = this.bookBarSeat(state.bar);
 
@@ -45,7 +46,6 @@ export default class Restaurant implements IRestaurant {
         const { errorMessage } = updatedBarState;
         return { errorMessage };
       }
-
       return { ...state, bar: updatedBarState };
     }
     // Book table
@@ -56,7 +56,7 @@ export default class Restaurant implements IRestaurant {
       return { errorMessage };
     }
 
-    return { ...state, tables: updatedTablesState };
+    return { ...state, tables: updatedTablesState, successMessage:"Successfull booking" };
   }
 
   bookTable(
@@ -70,16 +70,17 @@ export default class Restaurant implements IRestaurant {
       return { errorMessage: "All tables fully booked" };
     }
 
-    // find if there is a table that satifies the whole group
     // (tables should be sorted in order of number of seats, so first response will be the viable
     // table with the smallest amount of seats for the group)
-    const tableToChange = updatedTablesState.find(
+    const availableTable = updatedTablesState.find(
       (table) =>
         table.availability === "available" && table.seats >= seatsRequired
     );
 
-    if (tableToChange) {
-      tableToChange.availability = Availability.Unavailable;
+    if (availableTable) {
+      availableTable.availability = Availability.Unavailable;
+      console.log(updatedTablesState);
+      
       return updatedTablesState;
     }
 
@@ -88,31 +89,8 @@ export default class Restaurant implements IRestaurant {
       return { errorMessage: "Not enough tables to fulfill booking" };
     }
 
-    // No table big enough to fit everyone, split them between tables
-    // Default behaviour: Find biggest table and assign that, subract seats number from seats Required,
-    // call bookTable again to either find a table or just provide the largest and recursive call again
-    const initialValue = updatedTablesState.find(
-      (table) => table.availability === "available"
-    );
-    const largestAvailableTable = updatedTablesState.reduce(
-      (maxSeatsTable: IRestaurantTable, currentTable) => {
-        if (
-          (!maxSeatsTable || currentTable.seats > maxSeatsTable.seats) &&
-          currentTable.availability === "available"
-        ) {
-          return currentTable;
-        }
-        return maxSeatsTable;
-      },
-      initialValue as IRestaurantTable // type assertion (we check for any undefined above)
-    );
-    const tableToBook = updatedTablesState.find(
-      (table) => table.tableNumber === largestAvailableTable.tableNumber
-    ); // book table
-    tableToBook!.availability = Availability.Unavailable;
-    seatsRequired -= largestAvailableTable.seats;
-    console.log("new seatsRequired: ", seatsRequired);
-    return this.bookTable(updatedTablesState, seatsRequired);
+    // No one table large enough available, either merge tables or offer wait time
+    return({errorMessage: "No single table can fulfill booking. Either use multiple tables with custom booking or offer waiting time til next available table"})
   }
 
   bookBarSeat(barState: IBarSeat[]): IBarSeat[] | ErrorResponse {
@@ -131,20 +109,21 @@ export default class Restaurant implements IRestaurant {
 
   changeSeatingStatus<SeatingArray extends IRestaurantTable[] | IBarSeat[]>(
     seatingState: SeatingArray,
-    {spaceNumber, newStatus}: IchangeSeatingStatus
+    { spaceNumber, newStatus }: IchangeSeatingStatus
   ): SeatingArray {
     const updatedSeatingState = [...seatingState] as SeatingArray;
     //@ts-ignore
     let foundSeating = updatedSeatingState.find(
-      (space: IRestaurantTable | IBarSeat) => { // this conditional runs for every table or seat in the array
-        if(isRestaurantTable(space)){
-          return space.tableNumber === spaceNumber
+      (space: IRestaurantTable | IBarSeat) => {
+        // this conditional runs for every table or seat in the array
+        if (isRestaurantTable(space)) {
+          return space.tableNumber === spaceNumber;
         } else {
           // must be barSeat
-          return space.barSeatNumber === spaceNumber
+          return space.barSeatNumber === spaceNumber;
         }
       }
-      );
+    );
 
     if (foundSeating) {
       foundSeating.availability = newStatus; // change to it takes parameter 'available','reserved', 'out-of-order'
@@ -180,8 +159,9 @@ function isErrorResponse(value: any): value is ErrorResponse {
   return value && typeof value.errorMessage === "string";
 }
 
-
 // generalize this to be checkSeatingType()
-function isRestaurantTable(space: IBarSeat | IRestaurantTable): space is IRestaurantTable {
+function isRestaurantTable(
+  space: IBarSeat | IRestaurantTable
+): space is IRestaurantTable {
   return (space as IRestaurantTable).tableNumber !== undefined;
 }

@@ -21,21 +21,26 @@ var reducer = function (state, action) {
             return __assign(__assign({}, state), action.payload);
         case ActionTypes.MAKE_BOOKING:
             updatedState = restaurant.makeBooking(state, action.payload);
-            console.log(updatedState);
             if ("errorMessage" in updatedState) {
-                console.log("inside");
                 var errorMessage = updatedState.errorMessage;
                 return __assign(__assign({}, state), { errorMessage: errorMessage });
             }
             return __assign({}, updatedState);
         case ActionTypes.CHANGE_SEATING_STATUS:
             var _b = action.payload, type = _b.type, spaceNumber = _b.spaceNumber, newStatus = _b.newStatus;
-            var seatingState = type === 'tables' ? state.tables : state.bar;
-            updatedState = restaurant.changeSeatingStatus(seatingState, { spaceNumber: spaceNumber, newStatus: newStatus });
+            var seatingState = type === "tables" ? state.tables : state.bar;
+            updatedState = restaurant.changeSeatingStatus(seatingState, {
+                spaceNumber: spaceNumber,
+                newStatus: newStatus,
+            });
             return __assign(__assign({}, state), (_a = {}, _a[type] = updatedState, _a));
         case ActionTypes.ACKNOWLEDGE_ERROR:
             updatedState = __assign({}, state);
             delete updatedState.errorMessage;
+            return __assign({}, updatedState);
+        case ActionTypes.ACKNOWLEDGE_SUCCESS:
+            updatedState = __assign({}, state);
+            delete updatedState.successMessage;
             return __assign({}, updatedState);
         default:
             return state;

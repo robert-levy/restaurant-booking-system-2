@@ -25,10 +25,13 @@ const TableCardWrapper = styled.div<TableCardWrapperProps>`
     props.type === "bar" &&
     css`
       flex-wrap: nowrap;
+      white-space: nowrap;
       overflow-x: auto;
       scrollbar-width: none; /* Firefox */
       -ms-overflow-style: none; /* Internet Explorer and Edge */
-      padding:20px 0;
+      padding: 20px 0;
+      // @media (max-width: 750px) {
+      // }
     `}
 `;
 

@@ -15,33 +15,37 @@ const reducer = (state: State, action: Action): State => {
       };
     case ActionTypes.MAKE_BOOKING:
       updatedState = restaurant.makeBooking(state, action.payload);
-      console.log(updatedState);
       if ("errorMessage" in updatedState) {
-        console.log("inside");
         const { errorMessage } = updatedState;
         return {
           ...state,
           errorMessage,
         };
-      }
-
+      }      
       return { ...updatedState };
 
-    case ActionTypes.CHANGE_SEATING_STATUS: 
-      const {type, spaceNumber, newStatus} = action.payload
-      const seatingState = type === 'tables' ? state.tables : state.bar
-      updatedState = restaurant.changeSeatingStatus(
-        seatingState,
-        {spaceNumber, newStatus}
-      );
+    case ActionTypes.CHANGE_SEATING_STATUS:
+      const { type, spaceNumber, newStatus } = action.payload;
+      const seatingState = type === "tables" ? state.tables : state.bar;
+      updatedState = restaurant.changeSeatingStatus(seatingState, {
+        spaceNumber,
+        newStatus,
+      });
       return {
         ...state,
-      [type]: updatedState,
+        [type]: updatedState,
       };
 
     case ActionTypes.ACKNOWLEDGE_ERROR:
       updatedState = { ...state };
       delete updatedState.errorMessage;
+      return {
+        ...updatedState,
+      };
+
+    case ActionTypes.ACKNOWLEDGE_SUCCESS:
+      updatedState = { ...state };
+      delete updatedState.successMessage;
       return {
         ...updatedState,
       };

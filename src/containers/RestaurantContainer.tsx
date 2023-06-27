@@ -1,14 +1,20 @@
-import React from 'react'
-import ErrorModal from "../components/ErrorModal/ErrorModal";
+import React from "react";
+import Modal from "../components/Modal/Modal";
 import { useDataDispatch } from "../context/DataContext";
+import { ModalType } from "../interfaces/interfaces";
 
-const RestaurantContainer = ({ children }: {children: React.ReactNode}) => {
+const RestaurantContainer = ({ children }: { children: React.ReactNode }) => {
   const { state } = useDataDispatch();
 
   return (
     <>
       {children}
-      {state.errorMessage && <ErrorModal errorMessage={state.errorMessage}/>}
+      {state.errorMessage && (
+        <Modal message={state.errorMessage} modalType={ModalType.Error} />
+      )}
+      {state.successMessage && (
+        <Modal message={state.successMessage} modalType={ModalType.Success} />
+      )}
     </>
   );
 };

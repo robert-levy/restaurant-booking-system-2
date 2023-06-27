@@ -25,6 +25,7 @@ interface ICardInterface {
 
 interface StyledCardProps {
   background: string;
+  type: ICardType
 }
 
 //
@@ -35,6 +36,12 @@ const StyledCard = styled(Card)<StyledCardProps>`
   background-color: ${(props) => props.background};
   border-radius: 15%;
   padding: 5px;
+  ${(props) =>
+    props.type === "bar" &&
+    css`
+    max-width: 63px;
+      }
+    `}
 `;
 
 const CardTypography = styled(Typography)`
@@ -130,7 +137,7 @@ const SeatingCard = ({
   const backgroundColor = availabilityColors[availability] || "gray";
 
   return (
-    <StyledCard background={backgroundColor}>
+    <StyledCard background={backgroundColor} type={type}>
       <Grid container spacing={0}>
         <Grid item xs={9} style={{ display: "flex", justifyContent: "center" }}>
           <SpaceNumber type={type}>{spaceNumber}</SpaceNumber>
