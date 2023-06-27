@@ -13,7 +13,7 @@ var TablesSection = styled.div(templateObject_4 || (templateObject_4 = __makeTem
 var RestaurantFoyer = function (_a) {
     var branchName = _a.branchName;
     var tablesType = 'tables';
-    return (_jsxs(StyledPaper, { children: [_jsxs(Typography, { variant: "h5", children: [branchName, " Foyer"] }), _jsx(Divider, { style: { margin: "2% 5%" } }), _jsxs(Wrapper, { children: [_jsx(BarSection, {}), _jsx(TablesSection, { children: _jsx(ListCards, { type: tablesType }) })] })] }));
+    return (_jsxs(StyledPaper, { children: [_jsxs(Typography, { variant: "h5", children: [branchName, " Foyer"] }), _jsx(Divider, { style: { margin: "2% 5%" } }), _jsxs(Wrapper, { children: [_jsx(BarSection, { children: _jsx(ListCards, { type: 'bar' }) }), _jsx(TablesSection, { children: _jsx(ListCards, { type: 'tables' }) })] })] }));
 };
 export default RestaurantFoyer;
 var templateObject_1, templateObject_2, templateObject_3, templateObject_4;

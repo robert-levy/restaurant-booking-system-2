@@ -62,7 +62,7 @@ const SpaceNumber = styled(Typography)<TableNumberProps>`
   ${(props) =>
     props.type === "bar" &&
     css`
-      left: 27px;
+      left: 23px;
       z-index: 1;
     `}
 `;

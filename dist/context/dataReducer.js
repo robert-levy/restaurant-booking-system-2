@@ -12,6 +12,7 @@ var __assign = (this && this.__assign) || function () {
 import Restaurant from "../Restaurant";
 import { ActionTypes } from "./dataActions";
 var reducer = function (state, action) {
+    var _a;
     var restaurant = new Restaurant();
     // let updatedState: Partial<State> = {}; or ErrorResponse
     var updatedState;
@@ -27,11 +28,11 @@ var reducer = function (state, action) {
                 return __assign(__assign({}, state), { errorMessage: errorMessage });
             }
             return __assign({}, updatedState);
-        case ActionTypes.CHANGE_SEATING_STATUS: // use seating instead of space
-            var _a = action.payload, type = _a.type, spaceNumber = _a.spaceNumber, newStatus = _a.newStatus;
+        case ActionTypes.CHANGE_SEATING_STATUS:
+            var _b = action.payload, type = _b.type, spaceNumber = _b.spaceNumber, newStatus = _b.newStatus;
             var seatingState = type === 'tables' ? state.tables : state.bar;
             updatedState = restaurant.changeSeatingStatus(seatingState, { spaceNumber: spaceNumber, newStatus: newStatus });
-            return __assign(__assign({}, state), { tables: updatedState });
+            return __assign(__assign({}, state), (_a = {}, _a[type] = updatedState, _a));
         case ActionTypes.ACKNOWLEDGE_ERROR:
             updatedState = __assign({}, state);
             delete updatedState.errorMessage;

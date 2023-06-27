@@ -29,9 +29,10 @@ const RestaurantFoyer: React.FC<IRestaurantFoyer> = ({ branchName }) => {
       <Divider style={{ margin: "2% 5%" }} />
       <Wrapper>
         <BarSection>
+          <ListCards type={'bar'} />
         </BarSection>
         <TablesSection>
-          <ListCards type={tablesType}/>
+          <ListCards type={'tables'}/>
         </TablesSection>
       </Wrapper>
     </StyledPaper>

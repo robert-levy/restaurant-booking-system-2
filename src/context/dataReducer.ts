@@ -27,7 +27,7 @@ const reducer = (state: State, action: Action): State => {
 
       return { ...updatedState };
 
-    case ActionTypes.CHANGE_SEATING_STATUS: // use seating instead of space
+    case ActionTypes.CHANGE_SEATING_STATUS: 
       const {type, spaceNumber, newStatus} = action.payload
       const seatingState = type === 'tables' ? state.tables : state.bar
       updatedState = restaurant.changeSeatingStatus(
@@ -36,7 +36,7 @@ const reducer = (state: State, action: Action): State => {
       );
       return {
         ...state,
-        tables: updatedState, // as IRestaurantTable[], // Type assertion to State['tables']
+      [type]: updatedState,
       };
 
     case ActionTypes.ACKNOWLEDGE_ERROR:

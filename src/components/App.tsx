@@ -10,6 +10,9 @@ import WelcomeModal from "./WelcomeScreen/WelcomeScreen";
 const Wrapper = styled.div`
   background-color: #d1a7ff;
   padding: 10% 15%;
+  @media (max-width: 750px) {
+    padding: 0;
+  }
 `;
 
 const App = () => {

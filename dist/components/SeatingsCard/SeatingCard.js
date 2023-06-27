@@ -19,7 +19,7 @@ var CardTypography = styled(Typography)(templateObject_2 || (templateObject_2 = 
 var SpaceNumber = styled(Typography)(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n  position: relative;\n  color: white;\n  font-size: 0.7em;\n  top: 8px;\n\n  ", "\n\n  ", "\n"], ["\n  position: relative;\n  color: white;\n  font-size: 0.7em;\n  top: 8px;\n\n  ", "\n\n  ", "\n"])), function (props) {
     return props.type === "tables" && css(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n      left: 29px;\n    "], ["\n      left: 29px;\n    "])));
 }, function (props) {
-    return props.type === "bar" && css(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n      left: 27px;\n      z-index: 1;\n    "], ["\n      left: 27px;\n      z-index: 1;\n    "])));
+    return props.type === "bar" && css(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n      left: 23px;\n      z-index: 1;\n    "], ["\n      left: 23px;\n      z-index: 1;\n    "])));
 });
 var TableIcon = function () { return (_jsx(TableBarIcon, { style: {
         fontSize: "3.2em",
