@@ -1,14 +1,3 @@
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -33,5 +22,5 @@ export default function ErrorModal(_a) {
     var handleClose = function () {
         dispatch(acknowledgeError());
     };
-    return (_jsx("div", { children: _jsx(Modal, __assign({ open: true, onClose: handleClose, "aria-labelledby": "modal-modal-title", "aria-describedby": "modal-modal-description" }, { children: _jsxs(Box, __assign({ sx: style }, { children: [_jsx(Typography, __assign({ id: "modal-modal-title", variant: "h6", component: "h2" }, { children: "Error Occured" }), void 0), _jsx(Typography, __assign({ id: "modal-modal-description", sx: { mt: 2 } }, { children: errorMessage }), void 0), _jsx(Button, __assign({ variant: "contained", color: "error", onClick: handleClose, style: { marginTop: 20 } }, { children: "Okay" }), void 0)] }), void 0) }), void 0) }, void 0));
+    return (_jsx("div", { children: _jsx(Modal, { open: true, onClose: handleClose, "aria-labelledby": "modal-modal-title", "aria-describedby": "modal-modal-description", children: _jsxs(Box, { sx: style, children: [_jsx(Typography, { id: "modal-modal-title", variant: "h6", component: "h2", children: "Error Occured" }), _jsx(Typography, { id: "modal-modal-description", sx: { mt: 2 }, children: errorMessage }), _jsx(Button, { variant: "contained", color: "error", onClick: handleClose, style: { marginTop: 20 }, children: "Okay" })] }) }) }));
 }

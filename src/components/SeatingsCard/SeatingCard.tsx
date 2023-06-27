@@ -13,13 +13,13 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { ReactComponent as BarStoolIcon } from "../../assets/bar-chair.svg";
 import styled from "@emotion/styled";
 import { useDataDispatch } from "../../context/DataContext";
-import { makeTableAvailable } from "../../context/dataActions";
-import { ICardType } from "../../interfaces/interfaces";
+import { changeSeatingStatus } from "../../context/dataActions";
+import { ICardType, Availability } from "../../interfaces/interfaces";
 
 interface ICardInterface {
   spaceNumber: number;
   seats?: number;
-  availability: "available" | "unavailable" | "out-of-order";
+  availability: Availability;
   type: ICardType;
 }
 
@@ -101,20 +101,33 @@ const SeatingCard = ({
   };
 
   const handleMakeAvailable = (type: ICardType) => {
-    dispatch(makeTableAvailable(spaceNumber, type));
+    if (availability !== Availability.Available) {
+      dispatch(changeSeatingStatus(spaceNumber, type, Availability.Available));
+    }
     handleClose();
   };
 
-  const handleMakeOutOfOrder = () => {};
+  const handleMakeOutOfOrder = () => {
+    if (availability !== Availability.OutOfOrder) {
+      dispatch(changeSeatingStatus(spaceNumber, type, Availability.OutOfOrder));
+    }
+    handleClose();
+  };
 
-  const handleMakeReserved = () => {};
+  const handleMakeReserved = () => {
+    if (availability !== Availability.Reserved) {
+      dispatch(changeSeatingStatus(spaceNumber, type, Availability.Reserved));
+    }
+    handleClose();
+  };
 
-  const backgroundColor =
-    availability === "available"
-      ? "#a6ffa8"
-      : availability === "unavailable"
-      ? "#ffa7a7"
-      : "gray";
+  const availabilityColors: Record<Availability, string> = {
+    available: "#a6ffa8",
+    unavailable: "#ffa7a7",
+    reserved: "green",
+    "out-of-order": "gray",
+  };
+  const backgroundColor = availabilityColors[availability] || "gray";
 
   return (
     <StyledCard background={backgroundColor}>

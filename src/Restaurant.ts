@@ -4,12 +4,12 @@ import {
   IBarSeat,
   IRestaurantTable,
   ErrorResponse,
-  ICardType,
+  Availability,
 } from "./interfaces/interfaces";
 
-interface IMakeTableAvailable {
+interface IchangeSeatingStatus {
   spaceNumber: number,
-  type: ICardType
+  newStatus: Availability
 }
 
 export interface IRestaurant {
@@ -19,10 +19,10 @@ export interface IRestaurant {
     tables: IRestaurantTable[],
     seatsRequired: number
   ): IRestaurantTable[] | ErrorResponse;
-  makeTableAvailable(
-    tables: IRestaurantTable[],
-    payload: IMakeTableAvailable
-  ): IRestaurantTable[];
+  changeSeatingStatus<SeatingArray extends IRestaurantTable[] | IBarSeat[]>(
+    seatingState: SeatingArray,
+    payload: IchangeSeatingStatus
+  ): SeatingArray;
   makeBarSeatAvailable(bar: IBarSeat[], barSeatNumber: number): IBarSeat[];
   totalTableSeats(tables: IRestaurantTable[]): Number;
 }
@@ -79,7 +79,7 @@ export default class Restaurant implements IRestaurant {
     );
 
     if (tableToChange) {
-      tableToChange.availability = "unavailable";
+      tableToChange.availability = Availability.Unavailable;
       return updatedTablesState;
     }
 
@@ -109,7 +109,7 @@ export default class Restaurant implements IRestaurant {
     const tableToBook = updatedTablesState.find(
       (table) => table.tableNumber === largestAvailableTable.tableNumber
     ); // book table
-    tableToBook!.availability = "unavailable";
+    tableToBook!.availability = Availability.Unavailable;
     seatsRequired -= largestAvailableTable.seats;
     console.log("new seatsRequired: ", seatsRequired);
     return this.bookTable(updatedTablesState, seatsRequired);
@@ -122,25 +122,34 @@ export default class Restaurant implements IRestaurant {
     );
 
     if (seatToChange) {
-      seatToChange.availability = "unavailable";
+      seatToChange.availability = Availability.Unavailable;
       return updatedBarState;
     }
     // No barSeat available
     return { errorMessage: "No bar seats available" };
   }
 
-  makeTableAvailable(
-    tables: IRestaurantTable[],
-    {spaceNumber, type}: IMakeTableAvailable
-  ): IRestaurantTable[] {
-    const updatedTablesState = [...tables];
-    let foundTable = updatedTablesState.find(
-      (table) => table.tableNumber === spaceNumber
-    );
-    if (foundTable) {
-      foundTable.availability = "available";
+  changeSeatingStatus<SeatingArray extends IRestaurantTable[] | IBarSeat[]>(
+    seatingState: SeatingArray,
+    {spaceNumber, newStatus}: IchangeSeatingStatus
+  ): SeatingArray {
+    const updatedSeatingState = [...seatingState] as SeatingArray;
+    //@ts-ignore
+    let foundSeating = updatedSeatingState.find(
+      (space: IRestaurantTable | IBarSeat) => { // this conditional runs for every table or seat in the array
+        if(isRestaurantTable(space)){
+          return space.tableNumber === spaceNumber
+        } else {
+          // must be barSeat
+          return space.barSeatNumber === spaceNumber
+        }
+      }
+      );
+
+    if (foundSeating) {
+      foundSeating.availability = newStatus; // change to it takes parameter 'available','reserved', 'out-of-order'
     }
-    return updatedTablesState;
+    return updatedSeatingState;
   }
 
   makeBarSeatAvailable(bar: IBarSeat[], barSeatNumber: number): IBarSeat[] {
@@ -149,7 +158,7 @@ export default class Restaurant implements IRestaurant {
       (barSeat) => barSeat.barSeatNumber === barSeatNumber
     );
     if (foundBarSeat) {
-      foundBarSeat.availability = "available";
+      foundBarSeat.availability = Availability.Available;
     }
     return updatedBarState;
   }
@@ -169,4 +178,10 @@ export default class Restaurant implements IRestaurant {
 }
 function isErrorResponse(value: any): value is ErrorResponse {
   return value && typeof value.errorMessage === "string";
+}
+
+
+// generalize this to be checkSeatingType()
+function isRestaurantTable(space: IBarSeat | IRestaurantTable): space is IRestaurantTable {
+  return (space as IRestaurantTable).tableNumber !== undefined;
 }

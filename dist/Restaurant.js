@@ -9,11 +9,16 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-var __spreadArray = (this && this.__spreadArray) || function (to, from) {
-    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-        to[j] = from[i];
-    return to;
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
 };
+import { Availability, } from "./interfaces/interfaces";
 var Restaurant = /** @class */ (function () {
     function Restaurant() {
         this.totalTableSeats = function (tables) {
@@ -47,7 +52,7 @@ var Restaurant = /** @class */ (function () {
         return __assign(__assign({}, state), { tables: updatedTablesState });
     };
     Restaurant.prototype.bookTable = function (tablesState, seatsRequired) {
-        var updatedTablesState = __spreadArray([], tablesState);
+        var updatedTablesState = __spreadArray([], tablesState, true);
         // check not all tables are taken
         if (this.isTablesFullyBooked(updatedTablesState)) {
             return { errorMessage: "All tables fully booked" };
@@ -59,7 +64,7 @@ var Restaurant = /** @class */ (function () {
             return table.availability === "available" && table.seats >= seatsRequired;
         });
         if (tableToChange) {
-            tableToChange.availability = "unavailable";
+            tableToChange.availability = Availability.Unavailable;
             return updatedTablesState;
         }
         // If seatsRequired < total number of seats left , offer bar seats (for now just error not enough tables for booking)
@@ -79,35 +84,44 @@ var Restaurant = /** @class */ (function () {
         }, initialValue // type assertion (we check for any undefined above)
         );
         var tableToBook = updatedTablesState.find(function (table) { return table.tableNumber === largestAvailableTable.tableNumber; }); // book table
-        tableToBook.availability = "unavailable";
+        tableToBook.availability = Availability.Unavailable;
         seatsRequired -= largestAvailableTable.seats;
         console.log("new seatsRequired: ", seatsRequired);
         return this.bookTable(updatedTablesState, seatsRequired);
     };
     Restaurant.prototype.bookBarSeat = function (barState) {
-        var updatedBarState = __spreadArray([], barState);
+        var updatedBarState = __spreadArray([], barState, true);
         var seatToChange = updatedBarState.find(function (barSeat) { return barSeat.availability === "available"; });
         if (seatToChange) {
-            seatToChange.availability = "unavailable";
+            seatToChange.availability = Availability.Unavailable;
             return updatedBarState;
         }
         // No barSeat available
         return { errorMessage: "No bar seats available" };
     };
-    Restaurant.prototype.makeTableAvailable = function (tables, _a) {
-        var spaceNumber = _a.spaceNumber, type = _a.type;
-        var updatedTablesState = __spreadArray([], tables);
-        var foundTable = updatedTablesState.find(function (table) { return table.tableNumber === spaceNumber; });
-        if (foundTable) {
-            foundTable.availability = "available";
+    Restaurant.prototype.changeSeatingStatus = function (seatingState, _a) {
+        var spaceNumber = _a.spaceNumber, newStatus = _a.newStatus;
+        var updatedSeatingState = __spreadArray([], seatingState, true);
+        //@ts-ignore
+        var foundSeating = updatedSeatingState.find(function (space) {
+            if (isRestaurantTable(space)) {
+                return space.tableNumber === spaceNumber;
+            }
+            else {
+                // must be barSeat
+                return space.barSeatNumber === spaceNumber;
+            }
+        });
+        if (foundSeating) {
+            foundSeating.availability = newStatus; // change to it takes parameter 'available','reserved', 'out-of-order'
         }
-        return updatedTablesState;
+        return updatedSeatingState;
     };
     Restaurant.prototype.makeBarSeatAvailable = function (bar, barSeatNumber) {
-        var updatedBarState = __spreadArray([], bar);
+        var updatedBarState = __spreadArray([], bar, true);
         var foundBarSeat = updatedBarState.find(function (barSeat) { return barSeat.barSeatNumber === barSeatNumber; });
         if (foundBarSeat) {
-            foundBarSeat.availability = "available";
+            foundBarSeat.availability = Availability.Available;
         }
         return updatedBarState;
     };
@@ -119,4 +133,8 @@ var Restaurant = /** @class */ (function () {
 export default Restaurant;
 function isErrorResponse(value) {
     return value && typeof value.errorMessage === "string";
+}
+// generalize this to be checkSeatingType()
+function isRestaurantTable(space) {
+    return space.tableNumber !== undefined;
 }

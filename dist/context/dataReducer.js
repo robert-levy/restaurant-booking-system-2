@@ -27,8 +27,10 @@ var reducer = function (state, action) {
                 return __assign(__assign({}, state), { errorMessage: errorMessage });
             }
             return __assign({}, updatedState);
-        case ActionTypes.MAKE_TABLE_AVAILABLE:
-            updatedState = restaurant.makeTableAvailable(state.tables, action.payload);
+        case ActionTypes.CHANGE_SEATING_STATUS: // use seating instead of space
+            var _a = action.payload, type = _a.type, spaceNumber = _a.spaceNumber, newStatus = _a.newStatus;
+            var seatingState = type === 'tables' ? state.tables : state.bar;
+            updatedState = restaurant.changeSeatingStatus(seatingState, { spaceNumber: spaceNumber, newStatus: newStatus });
             return __assign(__assign({}, state), { tables: updatedState });
         case ActionTypes.ACKNOWLEDGE_ERROR:
             updatedState = __assign({}, state);

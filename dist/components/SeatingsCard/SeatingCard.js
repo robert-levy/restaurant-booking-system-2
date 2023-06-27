@@ -2,17 +2,6 @@ var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cook
     if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
     return cooked;
 };
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import React from "react";
 import { Card, Grid, Typography, IconButton, Menu, MenuItem, } from "@mui/material";
@@ -22,7 +11,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { ReactComponent as BarStoolIcon } from "../../assets/bar-chair.svg";
 import styled from "@emotion/styled";
 import { useDataDispatch } from "../../context/DataContext";
-import { makeTableAvailable } from "../../context/dataActions";
+import { changeSeatingStatus } from "../../context/dataActions";
+import { Availability } from "../../interfaces/interfaces";
 //
 var StyledCard = styled(Card)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  max-height: 100px;\n  min-width: 63px;\n  max-width: 80px;\n  background-color: ", ";\n  border-radius: 15%;\n  padding: 5px;\n"], ["\n  max-height: 100px;\n  min-width: 63px;\n  max-width: 80px;\n  background-color: ", ";\n  border-radius: 15%;\n  padding: 5px;\n"])), function (props) { return props.background; });
 var CardTypography = styled(Typography)(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  @media (max-width: 750px) {\n    font-size: 0.6em;\n  }\n"], ["\n  @media (max-width: 750px) {\n    font-size: 0.6em;\n  }\n"])));
@@ -35,8 +25,8 @@ var TableIcon = function () { return (_jsx(TableBarIcon, { style: {
         fontSize: "3.2em",
         justifyContent: "center",
         marginRight: "5px",
-    } }, void 0)); };
-var BarSeatIcon = function () { return (_jsx("div", __assign({ style: { position: "relative", marginTop: 8 } }, { children: _jsx(BarStoolIcon, {}, void 0) }), void 0)); };
+    } })); };
+var BarSeatIcon = function () { return (_jsx("div", { style: { position: "relative", marginTop: 8 }, children: _jsx(BarStoolIcon, {}) })); };
 var SeatingCard = function (_a) {
     var availability = _a.availability, spaceNumber = _a.spaceNumber, seats = _a.seats, type = _a.type;
     var _b = React.useState(null), anchorEl = _b[0], setAnchorEl = _b[1];
@@ -49,19 +39,33 @@ var SeatingCard = function (_a) {
         setAnchorEl(null);
     };
     var handleMakeAvailable = function (type) {
-        dispatch(makeTableAvailable(spaceNumber, type));
+        if (availability !== Availability.Available) {
+            dispatch(changeSeatingStatus(spaceNumber, type, Availability.Available));
+        }
         handleClose();
     };
-    var handleMakeOutOfOrder = function () { };
-    var handleMakeReserved = function () { };
-    var backgroundColor = availability === "available"
-        ? "#a6ffa8"
-        : availability === "unavailable"
-            ? "#ffa7a7"
-            : "gray";
-    return (_jsx(StyledCard, __assign({ background: backgroundColor }, { children: _jsxs(Grid, __assign({ container: true, spacing: 0 }, { children: [_jsxs(Grid, __assign({ item: true, xs: 9, style: { display: "flex", justifyContent: "center" } }, { children: [_jsx(SpaceNumber, __assign({ type: type }, { children: spaceNumber }), void 0), type === "tables" ? _jsx(TableIcon, {}, void 0) : _jsx(BarSeatIcon, {}, void 0)] }), void 0), _jsxs(Grid, __assign({ item: true, xs: 3 }, { children: [_jsx(IconButton, __assign({ style: { fontSize: "3.2em", marginLeft: -8 }, onClick: handleClick }, { children: _jsx(MoreVertIcon, {}, void 0) }), void 0), _jsxs(Menu, __assign({ id: "basic-menu", anchorEl: anchorEl, open: open, onClose: handleClose, MenuListProps: {
+    var handleMakeOutOfOrder = function () {
+        if (availability !== Availability.OutOfOrder) {
+            dispatch(changeSeatingStatus(spaceNumber, type, Availability.OutOfOrder));
+        }
+        handleClose();
+    };
+    var handleMakeReserved = function () {
+        if (availability !== Availability.Reserved) {
+            dispatch(changeSeatingStatus(spaceNumber, type, Availability.Reserved));
+        }
+        handleClose();
+    };
+    var availabilityColors = {
+        available: "#a6ffa8",
+        unavailable: "#ffa7a7",
+        reserved: "green",
+        "out-of-order": "gray",
+    };
+    var backgroundColor = availabilityColors[availability] || "gray";
+    return (_jsx(StyledCard, { background: backgroundColor, children: _jsxs(Grid, { container: true, spacing: 0, children: [_jsxs(Grid, { item: true, xs: 9, style: { display: "flex", justifyContent: "center" }, children: [_jsx(SpaceNumber, { type: type, children: spaceNumber }), type === "tables" ? _jsx(TableIcon, {}) : _jsx(BarSeatIcon, {})] }), _jsxs(Grid, { item: true, xs: 3, children: [_jsx(IconButton, { style: { fontSize: "3.2em", marginLeft: -8 }, onClick: handleClick, children: _jsx(MoreVertIcon, {}) }), _jsxs(Menu, { id: "basic-menu", anchorEl: anchorEl, open: open, onClose: handleClose, MenuListProps: {
                                 "aria-labelledby": "basic-button",
-                            } }, { children: [_jsx(MenuItem, __assign({ onClick: function () { return handleMakeAvailable(type); } }, { children: "Make Available" }), void 0), _jsx(MenuItem, __assign({ onClick: handleMakeOutOfOrder }, { children: "Make Out of Order" }), void 0), _jsx(MenuItem, __assign({ onClick: handleMakeReserved }, { children: "Make Reserved" }), void 0)] }), void 0)] }), void 0), _jsx(Grid, __assign({ item: true, xs: 12, style: { display: "flex", justifyContent: "center" } }, { children: type === "tables" && (_jsxs(CardTypography, __assign({ fontSize: ".8em" }, { children: [seats, " seats"] }), void 0)) }), void 0), _jsx(Grid, __assign({ item: true, xs: 12, style: { display: "flex", justifyContent: "center" } }, { children: _jsx(CardTypography, __assign({ align: "center", fontSize: ".8em" }, { children: availability }), void 0) }), void 0)] }), void 0) }), void 0));
+                            }, children: [_jsx(MenuItem, { onClick: function () { return handleMakeAvailable(type); }, children: "Make Available" }), _jsx(MenuItem, { onClick: handleMakeOutOfOrder, children: "Make Out of Order" }), _jsx(MenuItem, { onClick: handleMakeReserved, children: "Make Reserved" })] })] }), _jsx(Grid, { item: true, xs: 12, style: { display: "flex", justifyContent: "center" }, children: type === "tables" && (_jsxs(CardTypography, { fontSize: ".8em", children: [seats, " seats"] })) }), _jsx(Grid, { item: true, xs: 12, style: { display: "flex", justifyContent: "center" }, children: _jsx(CardTypography, { align: "center", fontSize: ".8em", children: availability }) })] }) }));
 };
 export default SeatingCard;
 var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5;

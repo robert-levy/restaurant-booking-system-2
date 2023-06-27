@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 var root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 // <React.StrictMode>
-_jsx(App, {}, void 0)
+_jsx(App, {})
 // </React.StrictMode>
 );
 reportWebVitals();

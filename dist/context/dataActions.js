@@ -6,7 +6,7 @@ export var ActionTypes;
 (function (ActionTypes) {
     ActionTypes["CREATE_RESTAURANT"] = "CREATE_RESTAURANT";
     ActionTypes["MAKE_BOOKING"] = "MAKE_BOOKING";
-    ActionTypes["MAKE_TABLE_AVAILABLE"] = "MAKE_TABLE_AVAILABLE";
+    ActionTypes["CHANGE_SEATING_STATUS"] = "CHANGE_SEATING_STATUS";
     ActionTypes["ACKNOWLEDGE_ERROR"] = "ACKNOWLEDGE_ERROR";
 })(ActionTypes || (ActionTypes = {}));
 /// Actions
@@ -21,9 +21,9 @@ export var makeBooking = function (totalPersons, personsWithDisability) { return
         personsWithDisability: personsWithDisability,
     },
 }); };
-export var makeTableAvailable = function (spaceNumber, type) { return ({
-    type: ActionTypes.MAKE_TABLE_AVAILABLE,
-    payload: { spaceNumber: spaceNumber, type: type },
+export var changeSeatingStatus = function (spaceNumber, type, newStatus) { return ({
+    type: ActionTypes.CHANGE_SEATING_STATUS,
+    payload: { spaceNumber: spaceNumber, type: type, newStatus: newStatus },
 }); };
 export var acknowledgeError = function () { return ({
     type: ActionTypes.ACKNOWLEDGE_ERROR

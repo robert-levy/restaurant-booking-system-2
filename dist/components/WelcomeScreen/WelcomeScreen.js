@@ -2,17 +2,6 @@ var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cook
     if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
     return cooked;
 };
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { Paper, Typography, TextField, IconButton } from "@mui/material/";
 import { useDataDispatch } from "../../context/DataContext";
@@ -38,7 +27,7 @@ var WelcomeModal = function (_a) {
         var inputValue = inputElement.value;
         setBranchName(inputValue);
     };
-    return (_jsx(StyledWrapper, { children: _jsxs(StyledPaper, __assign({ elevation: 24 }, { children: [_jsx(Typography, __assign({ align: "center", variant: "h5" }, { children: "Welcome to Restuarant Booking System" }), void 0), _jsx(Typography, __assign({ variant: "subtitle1", marginTop: 3, marginBottom: 2, align: "center" }, { children: "Please enter a restaurant name to begin" }), void 0), _jsxs(FormWrapper, __assign({ onSubmit: handleSubmit }, { children: [_jsx(TextField, { required: true, id: "restaurant-name-field", label: "Required", defaultValue: "Nandos Shoreditch" }, void 0), _jsx(IconButton, __assign({ "aria-label": "CheckCircleIcon", type: "submit" }, { children: _jsx(CheckCircleIcon, { color: "secondary", fontSize: "large" }, void 0) }), void 0)] }), void 0)] }), void 0) }, void 0));
+    return (_jsx(StyledWrapper, { children: _jsxs(StyledPaper, { elevation: 24, children: [_jsx(Typography, { align: "center", variant: "h5", children: "Welcome to Restuarant Booking System" }), _jsx(Typography, { variant: "subtitle1", marginTop: 3, marginBottom: 2, align: "center", children: "Please enter a restaurant name to begin" }), _jsxs(FormWrapper, { onSubmit: handleSubmit, children: [_jsx(TextField, { required: true, id: "restaurant-name-field", label: "Required", defaultValue: "Nandos Shoreditch" }), _jsx(IconButton, { "aria-label": "CheckCircleIcon", type: "submit", children: _jsx(CheckCircleIcon, { color: "secondary", fontSize: "large" }) })] })] }) }));
 };
 export default WelcomeModal;
 var templateObject_1, templateObject_2, templateObject_3;

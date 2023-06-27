@@ -1,5 +1,4 @@
-import { State, IBookingRequest } from "../interfaces/interfaces";
-import { ICardType } from "../interfaces/interfaces";
+import { State, IBookingRequest, ICardType, Availability } from "../interfaces/interfaces";
 
 export const initialState: State = {
   bar: [],
@@ -9,7 +8,7 @@ export const initialState: State = {
 export enum ActionTypes {
   CREATE_RESTAURANT = "CREATE_RESTAURANT",
   MAKE_BOOKING = "MAKE_BOOKING",
-  MAKE_TABLE_AVAILABLE = "MAKE_TABLE_AVAILABLE",
+  CHANGE_SEATING_STATUS = "CHANGE_SEATING_STATUS",
   ACKNOWLEDGE_ERROR = "ACKNOWLEDGE_ERROR",
 }
 
@@ -23,11 +22,12 @@ interface MakeBookingAction {
   payload: IBookingRequest;
 }
 
-interface MakeTableAvailableAction {
-  type: ActionTypes.MAKE_TABLE_AVAILABLE;
+interface changeSeatingStatusAction {
+  type: ActionTypes.CHANGE_SEATING_STATUS;
   payload: {
     spaceNumber: number,
-    type: ICardType
+    type: ICardType,
+    newStatus:Availability
   };
 }
 
@@ -38,7 +38,7 @@ interface AcknowledgeErrorAction {
 export type Action =
   | CreateRestaurantAction
   | MakeBookingAction
-  | MakeTableAvailableAction
+  | changeSeatingStatusAction
   | AcknowledgeErrorAction;
 
 /// Actions
@@ -58,12 +58,13 @@ export const makeBooking = (
   },
 });
 
-export const makeTableAvailable = (
+export const changeSeatingStatus = (
   spaceNumber: number,
-  type: ICardType
-): MakeTableAvailableAction => ({
-  type: ActionTypes.MAKE_TABLE_AVAILABLE,
-  payload: {spaceNumber, type},
+  type: ICardType,
+  newStatus: Availability
+): changeSeatingStatusAction => ({
+  type: ActionTypes.CHANGE_SEATING_STATUS,
+  payload: {spaceNumber, type, newStatus},
 });
 
 export const acknowledgeError = (): AcknowledgeErrorAction => ({

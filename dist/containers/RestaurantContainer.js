@@ -4,6 +4,6 @@ import { useDataDispatch } from "../context/DataContext";
 var RestaurantContainer = function (_a) {
     var children = _a.children;
     var state = useDataDispatch().state;
-    return (_jsxs(_Fragment, { children: [children, state.errorMessage && _jsx(ErrorModal, { errorMessage: state.errorMessage }, void 0)] }, void 0));
+    return (_jsxs(_Fragment, { children: [children, state.errorMessage && _jsx(ErrorModal, { errorMessage: state.errorMessage })] }));
 };
 export default RestaurantContainer;

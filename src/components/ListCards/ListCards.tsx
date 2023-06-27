@@ -30,13 +30,6 @@ const ListCards = ({type}: {type: ICardType}) => {
             spaceNumber={table.tableNumber}
           />
         ))}
-        {/* <SeatingCard
-          type={'bar' as ICardType}
-          key={123}
-          availability={"available"}
-          seats={5}
-          spaceNumber={20}
-        /> */}
       </TableCardWrapper>
     </>
   );

@@ -27,10 +27,12 @@ const reducer = (state: State, action: Action): State => {
 
       return { ...updatedState };
 
-    case ActionTypes.MAKE_TABLE_AVAILABLE:
-      updatedState = restaurant.makeTableAvailable(
-        state.tables,
-        action.payload
+    case ActionTypes.CHANGE_SEATING_STATUS: // use seating instead of space
+      const {type, spaceNumber, newStatus} = action.payload
+      const seatingState = type === 'tables' ? state.tables : state.bar
+      updatedState = restaurant.changeSeatingStatus(
+        seatingState,
+        {spaceNumber, newStatus}
       );
       return {
         ...state,
