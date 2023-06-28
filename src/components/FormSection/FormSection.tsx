@@ -52,6 +52,7 @@ const FormSection = () => {
     const totalPersons = +(e.target.value)
     setTotalPersons(totalPersons);
     setPersonsWithDisabilityInputs( [...Array(totalPersons + 1).keys()]);
+    setPersonsWithDisability(0)
   };
 
   return (

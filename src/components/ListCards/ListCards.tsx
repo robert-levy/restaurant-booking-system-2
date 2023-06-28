@@ -9,10 +9,10 @@ import {
 } from "../../interfaces/interfaces";
 import { css } from "@emotion/react";
 
-interface TableCardWrapperProps {
+interface SeatingCardsWrapperProps {
   type: "tables" | "bar";
 }
-const TableCardWrapper = styled.div<TableCardWrapperProps>`
+const SeatingCardsWrapper = styled.div<SeatingCardsWrapperProps>`
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
@@ -29,7 +29,7 @@ const TableCardWrapper = styled.div<TableCardWrapperProps>`
       overflow-x: auto;
       scrollbar-width: none; /* Firefox */
       -ms-overflow-style: none; /* Internet Explorer and Edge */
-      padding: 20px 0;
+      padding-bottom: 20px;
       // @media (max-width: 750px) {
       // }
     `}
@@ -41,13 +41,13 @@ const ListCards = ({ type }: { type: ICardType }) => {
   return (
     <>
       <Typography variant="h6">Active {seatingType}</Typography>
-      <TableCardWrapper type={type}>
+      <SeatingCardsWrapper type={type}>
         {type === "tables" ? (
           <RenderTables tables={tables} />
         ) : (
           <RenderBarSeats bar={bar} />
         )}
-      </TableCardWrapper>
+      </SeatingCardsWrapper>
     </>
   );
 };
@@ -70,7 +70,7 @@ const RenderTables = ({ tables }: { tables: IRestaurantTable[] }) => {
 
 const RenderBarSeats = ({ bar }: { bar: IBarSeat[] }) => {
   return (
-    <>
+    <div style={{display:'flex', gap:'1vw',width:'-webkit-fill-available'}}>
       {bar.map((bar, index) => (
         <SeatingCard
           type="bar"
@@ -79,7 +79,7 @@ const RenderBarSeats = ({ bar }: { bar: IBarSeat[] }) => {
           spaceNumber={bar.barSeatNumber}
         />
       ))}
-    </>
+    </div>
   );
 };
 
