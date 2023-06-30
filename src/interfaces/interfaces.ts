@@ -25,7 +25,7 @@ export interface State {
   bar: IBarSeat[] | [];
   tables: IRestaurantTable[] | [];
   errorMessage?: string; // can narrow this down to list of errors
-  successMessage?: string
+  successMessage?: string //same for success messages
 }
 
 export interface ErrorResponse {

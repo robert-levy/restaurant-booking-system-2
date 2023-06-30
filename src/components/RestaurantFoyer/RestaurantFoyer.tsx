@@ -1,7 +1,6 @@
 import { Paper, Typography, Divider } from "@mui/material";
 import styled from "@emotion/styled";
 import ListCards from "../ListCards/ListCards";
-import { ICardType } from "../../interfaces/interfaces";
 
 interface IRestaurantFoyer {
   branchName: string;
@@ -22,7 +21,6 @@ const BarSection = styled.div``;
 const TablesSection = styled.div``;
 
 const RestaurantFoyer: React.FC<IRestaurantFoyer> = ({ branchName }) => {
-  const tablesType: ICardType = 'tables' 
   return (
     <StyledPaper>
       <Typography variant="h5">{branchName} Foyer</Typography>

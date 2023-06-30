@@ -1,6 +1,6 @@
-import Restaurant, {IRestaurant}  from './Restaurant';
-import RestraurantTables from './RestaurantTables.json'
-import BarSeats from './RestaurantBar.json'
+import Restaurant, {IRestaurant}  from '../Restaurant';
+import RestraurantTables from '../RestaurantTables.json'
+import BarSeats from '../RestaurantBar.json'
 
 describe('test', () => {
     // let restaurantBooking: IRestaurant;

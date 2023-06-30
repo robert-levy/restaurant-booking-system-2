@@ -14,7 +14,6 @@ const Wrapper = styled.div `
 const BarSection = styled.div ``;
 const TablesSection = styled.div ``;
 const RestaurantFoyer = ({ branchName }) => {
-    const tablesType = 'tables';
     return (_jsxs(StyledPaper, { children: [_jsxs(Typography, { variant: "h5", children: [branchName, " Foyer"] }), _jsx(Divider, { style: { margin: "2% 5%" } }), _jsxs(Wrapper, { children: [_jsx(BarSection, { children: _jsx(ListCards, { type: 'bar' }) }), _jsx(TablesSection, { children: _jsx(ListCards, { type: 'tables' }) })] })] }));
 };
 export default RestaurantFoyer;

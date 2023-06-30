@@ -2,7 +2,6 @@ import Restaurant from "../Restaurant";
 import { ActionTypes } from "./dataActions";
 const reducer = (state, action) => {
     let restaurant = new Restaurant();
-    // let updatedState: Partial<State> = {}; or ErrorResponse
     let updatedState;
     switch (action.type) {
         case ActionTypes.CREATE_RESTAURANT:
@@ -34,15 +33,11 @@ const reducer = (state, action) => {
         case ActionTypes.ACKNOWLEDGE_ERROR:
             updatedState = { ...state };
             delete updatedState.errorMessage;
-            return {
-                ...updatedState,
-            };
+            return updatedState;
         case ActionTypes.ACKNOWLEDGE_SUCCESS:
             updatedState = { ...state };
             delete updatedState.successMessage;
-            return {
-                ...updatedState,
-            };
+            return updatedState;
         default:
             return state;
     }

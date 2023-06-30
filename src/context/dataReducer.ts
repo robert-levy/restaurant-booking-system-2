@@ -1,11 +1,19 @@
 import Restaurant from "../Restaurant";
-import { State } from "../interfaces/interfaces";
+import {
+  State,
+  ErrorResponse,
+  IRestaurantTable,
+  IBarSeat,
+} from "../interfaces/interfaces";
 import { Action, ActionTypes } from "./dataActions";
 
 const reducer = (state: State, action: Action): State => {
   let restaurant = new Restaurant();
-  // let updatedState: Partial<State> = {}; or ErrorResponse
-  let updatedState: any;
+  let updatedState:
+    | State
+    | ErrorResponse
+    | IRestaurantTable[]
+    | IBarSeat[] ;
 
   switch (action.type) {
     case ActionTypes.CREATE_RESTAURANT:
@@ -21,8 +29,8 @@ const reducer = (state: State, action: Action): State => {
           ...state,
           errorMessage,
         };
-      }      
-      return updatedState ;
+      }
+      return updatedState;
 
     case ActionTypes.CHANGE_SEATING_STATUS:
       const { type, spaceNumber, newStatus } = action.payload;
@@ -39,16 +47,14 @@ const reducer = (state: State, action: Action): State => {
     case ActionTypes.ACKNOWLEDGE_ERROR:
       updatedState = { ...state };
       delete updatedState.errorMessage;
-      return {
-        ...updatedState,
-      };
+      return updatedState;
+    
 
     case ActionTypes.ACKNOWLEDGE_SUCCESS:
       updatedState = { ...state };
       delete updatedState.successMessage;
-      return {
-        ...updatedState,
-      };
+      return updatedState;
+
     default:
       return state;
   }
