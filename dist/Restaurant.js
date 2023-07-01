@@ -1,4 +1,4 @@
-import { Availability, } from "./interfaces/interfaces";
+import { Availability } from "./interfaces/interfaces";
 export default class Restaurant {
     makeBooking(state, { totalPersons, personsWithDisability = 0 }) {
         const seatsRequired = personsWithDisability === 0
@@ -43,7 +43,6 @@ export default class Restaurant {
         if (seatsRequired > this.totalTableSeats(updatedTablesState)) {
             return { errorMessage: "Not enough tables to fulfill booking" };
         }
-        // No one table large enough available, either merge tables or offer wait time
         return {
             errorMessage: "No single table can fulfill booking. Either use multiple tables with custom booking or offer waiting time til next available table",
         };
@@ -64,9 +63,9 @@ export default class Restaurant {
     }
     changeSeatingStatus(seatingState, { spaceNumber, newStatus }) {
         const updatedSeatingState = [...seatingState];
-        //@ts-ignore
+        //@ts-ignore  TODO: Solve typing issue
         let foundSeating = updatedSeatingState.find((space) => {
-            // this conditional runs for every table or seat in the array
+            // Todo: this conditional runs for every table or seat in the array. Only need to check once
             if (isRestaurantTable(space)) {
                 return space.tableNumber === spaceNumber;
             }
@@ -76,7 +75,7 @@ export default class Restaurant {
             }
         });
         if (foundSeating) {
-            foundSeating.availability = newStatus; // change to it takes parameter 'available','reserved', 'out-of-order'
+            foundSeating.availability = newStatus;
         }
         return updatedSeatingState;
     }
@@ -98,7 +97,7 @@ export default class Restaurant {
 function isErrorResponse(value) {
     return value && typeof value.errorMessage === "string";
 }
-// generalize this to be checkSeatingType()
+// Todo: generalize this to be checkSeatingType()
 function isRestaurantTable(space) {
     return space.tableNumber !== undefined;
 }

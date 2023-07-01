@@ -1,6 +1,7 @@
-import Restaurant, {IRestaurant}  from '../Restaurant';
+import Restaurant  from '../Restaurant';
 import RestraurantTables from '../RestaurantTables.json'
 import BarSeats from '../RestaurantBar.json'
+import { IRestaurant } from '../interfaces/interfaces';
 
 describe('test', () => {
     // let restaurantBooking: IRestaurant;

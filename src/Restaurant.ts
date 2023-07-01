@@ -5,25 +5,9 @@ import {
   IRestaurantTable,
   ErrorResponse,
   Availability,
+  IRestaurant,
+  IchangeSeatingStatus
 } from "./interfaces/interfaces";
-
-interface IchangeSeatingStatus {
-  spaceNumber: number;
-  newStatus: Availability;
-}
-
-export interface IRestaurant {
-  makeBooking(state: State, request: IBookingRequest): State | ErrorResponse;
-  bookBarSeat(state: State):State | ErrorResponse;
-  bookTable(state: State, seatsRequired: number): State | ErrorResponse;
-  changeSeatingStatus<SeatingArray extends IRestaurantTable[] | IBarSeat[]>(
-    seatingState: SeatingArray,
-    payload: IchangeSeatingStatus
-  ): SeatingArray;
-  makeBarSeatAvailable(bar: IBarSeat[], barSeatNumber: number): IBarSeat[];
-  totalTableSeats(tables: IRestaurantTable[]): Number;
-}
-
 export default class Restaurant implements IRestaurant {
   makeBooking(
     state: State,
@@ -86,7 +70,6 @@ export default class Restaurant implements IRestaurant {
       return { errorMessage: "Not enough tables to fulfill booking" };
     }
 
-    // No one table large enough available, either merge tables or offer wait time
     return {
       errorMessage:
         "No single table can fulfill booking. Either use multiple tables with custom booking or offer waiting time til next available table",
@@ -116,10 +99,10 @@ export default class Restaurant implements IRestaurant {
     { spaceNumber, newStatus }: IchangeSeatingStatus
   ): SeatingArray {
     const updatedSeatingState = [...seatingState] as SeatingArray;
-    //@ts-ignore
+    //@ts-ignore  TODO: Solve typing issue
     let foundSeating = updatedSeatingState.find(
       (space: IRestaurantTable | IBarSeat) => {
-        // this conditional runs for every table or seat in the array
+        // Todo: this conditional runs for every table or seat in the array. Only need to check once
         if (isRestaurantTable(space)) {
           return space.tableNumber === spaceNumber;
         } else {
@@ -130,7 +113,7 @@ export default class Restaurant implements IRestaurant {
     );
 
     if (foundSeating) {
-      foundSeating.availability = newStatus; // change to it takes parameter 'available','reserved', 'out-of-order'
+      foundSeating.availability = newStatus;
     }
     return updatedSeatingState;
   }
@@ -163,7 +146,7 @@ function isErrorResponse(value: any): value is ErrorResponse {
   return value && typeof value.errorMessage === "string";
 }
 
-// generalize this to be checkSeatingType()
+// Todo: generalize this to be checkSeatingType()
 function isRestaurantTable(
   space: IBarSeat | IRestaurantTable
 ): space is IRestaurantTable {
