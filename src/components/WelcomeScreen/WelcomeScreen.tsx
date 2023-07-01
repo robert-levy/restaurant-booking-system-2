@@ -38,7 +38,7 @@ const FormWrapper = styled.form`
   }
 `;
 
-const WelcomeModal: React.FC<IWelcomeModal> = ({
+const WelcomeScreen: React.FC<IWelcomeModal> = ({
   setBranchName,
 }) => {
   const {dispatch} = useDataDispatch()
@@ -89,4 +89,4 @@ const WelcomeModal: React.FC<IWelcomeModal> = ({
   );
 };
 
-export default WelcomeModal;
+export default WelcomeScreen;

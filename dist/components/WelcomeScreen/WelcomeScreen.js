@@ -29,7 +29,7 @@ const FormWrapper = styled.form `
     flex-direction: column;
   }
 `;
-const WelcomeModal = ({ setBranchName, }) => {
+const WelcomeScreen = ({ setBranchName, }) => {
     const { dispatch } = useDataDispatch();
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -44,4 +44,4 @@ const WelcomeModal = ({ setBranchName, }) => {
     };
     return (_jsx(StyledWrapper, { children: _jsxs(StyledPaper, { elevation: 24, children: [_jsx(Typography, { align: "center", variant: "h5", children: "Welcome to Restuarant Booking System" }), _jsx(Typography, { variant: "subtitle1", marginTop: 3, marginBottom: 2, align: "center", children: "Please enter a restaurant name to begin" }), _jsxs(FormWrapper, { onSubmit: handleSubmit, children: [_jsx(TextField, { required: true, id: "restaurant-name-field", label: "Required", defaultValue: "Nandos Shoreditch" }), _jsx(IconButton, { "aria-label": "CheckCircleIcon", type: "submit", children: _jsx(CheckCircleIcon, { color: "secondary", fontSize: "large" }) })] })] }) }));
 };
-export default WelcomeModal;
+export default WelcomeScreen;
