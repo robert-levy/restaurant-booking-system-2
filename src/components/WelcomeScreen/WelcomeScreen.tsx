@@ -1,8 +1,8 @@
 import React from "react";
 import { Paper, Typography, TextField, IconButton } from "@mui/material/";
-import {useDataDispatch} from "../../context/DataContext";
-import RestaurantTablesJson from '../../RestaurantTables.json'
-import RestaurantBarJson from '../../RestaurantBar.json'
+import { useDataDispatch } from "../../context/DataContext";
+import RestaurantTablesJson from "../../RestaurantTables.json";
+import RestaurantBarJson from "../../RestaurantBar.json";
 import { createRestaurant } from "../../context/dataActions";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import styled from "@emotion/styled";
@@ -32,31 +32,31 @@ const FormWrapper = styled.form`
   justify-content: center;
   position: relative;
   top: 10%;
-  gap:20px;
+  gap: 20px;
   @media (max-width: 350px) {
     flex-direction: column;
   }
 `;
 
-const WelcomeScreen: React.FC<IWelcomeModal> = ({
-  setBranchName,
-}) => {
-  const {dispatch} = useDataDispatch()
+const WelcomeScreen: React.FC<IWelcomeModal> = ({ setBranchName }) => {
+  const { dispatch } = useDataDispatch();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // setup state
-    dispatch(createRestaurant({
-      tables: RestaurantTablesJson as IRestaurantTable[],
-      bar: RestaurantBarJson as IBarSeat[]
-    }))
+    // setup state, TODO: Currently hard-coded. Should accept input from user
+    dispatch(
+      createRestaurant({
+        tables: RestaurantTablesJson as IRestaurantTable[],
+        bar: RestaurantBarJson as IBarSeat[],
+      })
+    );
 
     const inputElement = e.currentTarget.elements.namedItem(
       "restaurant-name-field"
     ) as HTMLInputElement;
     const inputValue = inputElement.value;
-    setBranchName(inputValue)
+    setBranchName(inputValue);
   };
 
   return (
@@ -79,8 +79,13 @@ const WelcomeScreen: React.FC<IWelcomeModal> = ({
             id="restaurant-name-field"
             label="Required"
             defaultValue="Nandos Shoreditch"
+            data-testid="restaurant-name-input-test"
           />
-          <IconButton aria-label="CheckCircleIcon" type="submit">
+          <IconButton
+            aria-label="CheckCircleIcon"
+            type="submit"
+            data-testid="welcome-screen-submit"
+          >
             <CheckCircleIcon color="secondary" fontSize="large" />
           </IconButton>
         </FormWrapper>

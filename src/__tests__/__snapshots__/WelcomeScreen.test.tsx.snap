@@ -18,11 +18,12 @@ exports[`WelcomeScreen.tsx snapshot test 1`] = `
       Please enter a restaurant name to begin
     </h6>
     <form
-      className="css-1txsnjt"
+      className="css-6batyf"
       onSubmit={[Function]}
     >
       <div
         className="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
+        data-testid="restaurant-name-input-test"
       >
         <label
           className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
@@ -76,6 +77,7 @@ exports[`WelcomeScreen.tsx snapshot test 1`] = `
       <button
         aria-label="CheckCircleIcon"
         className="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+        data-testid="welcome-screen-submit"
         disabled={false}
         onBlur={[Function]}
         onContextMenu={[Function]}

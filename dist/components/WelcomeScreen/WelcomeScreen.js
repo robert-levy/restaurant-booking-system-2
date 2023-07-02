@@ -33,7 +33,7 @@ const WelcomeScreen = ({ setBranchName, }) => {
     const { dispatch } = useDataDispatch();
     const handleSubmit = (e) => {
         e.preventDefault();
-        // setup state
+        // setup state, TODO: Currently hard-coded. Should accept input from user
         dispatch(createRestaurant({
             tables: RestaurantTablesJson,
             bar: RestaurantBarJson
