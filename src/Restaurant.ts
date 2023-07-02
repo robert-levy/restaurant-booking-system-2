@@ -6,7 +6,7 @@ import {
   ErrorResponse,
   Availability,
   IRestaurant,
-  IchangeSeatingStatus
+  IchangeSeatingStatus,
 } from "./interfaces/interfaces";
 export default class Restaurant implements IRestaurant {
   makeBooking(
@@ -94,27 +94,26 @@ export default class Restaurant implements IRestaurant {
     return { errorMessage: "No bar seats available" };
   }
 
-  changeSeatingStatus<SeatingArray extends IRestaurantTable[] | IBarSeat[]>(
-    seatingState: SeatingArray,
+  changeSeatingStatus<T extends IRestaurantTable | IBarSeat>(
+    seatingState: T[],
     { spaceNumber, newStatus }: IchangeSeatingStatus
-  ): SeatingArray {
-    const updatedSeatingState = [...seatingState] as SeatingArray;
-    //@ts-ignore  TODO: Solve typing issue
-    let foundSeating = updatedSeatingState.find(
-      (space: IRestaurantTable | IBarSeat) => {
-        // Todo: this conditional runs for every table or seat in the array. Only need to check once
-        if (isRestaurantTable(space)) {
-          return space.tableNumber === spaceNumber;
-        } else {
-          // must be barSeat
-          return space.barSeatNumber === spaceNumber;
-        }
-      }
-    );
+  ): T[] {
+    let updatedSeatingState = [...seatingState];
 
-    if (foundSeating) {
-      foundSeating.availability = newStatus;
-    }
+    // const seatingNumberProperty = "tableNumber" in seatingState[0] ? "tableNumber" : "barSeatNumber"
+    // const foundSpace = seatingState.find((space) => (space as any)[seatingNumberProperty] === spaceNumber)
+
+    updatedSeatingState = seatingState.map((space) => {
+      if ("tableNumber" in space && space.tableNumber === spaceNumber) {
+        return { ...space, availability: newStatus };
+      } else if (
+        "barSeatNumber" in space &&
+        space.barSeatNumber === spaceNumber
+      ) {
+        return { ...space, availability: newStatus };
+      }
+      return space;
+    });
     return updatedSeatingState;
   }
 
@@ -144,11 +143,4 @@ export default class Restaurant implements IRestaurant {
 }
 function isErrorResponse(value: any): value is ErrorResponse {
   return value && typeof value.errorMessage === "string";
-}
-
-// Todo: generalize this to be checkSeatingType()
-function isRestaurantTable(
-  space: IBarSeat | IRestaurantTable
-): space is IRestaurantTable {
-  return (space as IRestaurantTable).tableNumber !== undefined;
 }

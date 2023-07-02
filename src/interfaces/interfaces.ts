@@ -48,10 +48,10 @@ export interface IRestaurant {
   makeBooking(state: State, request: IBookingRequest): State | ErrorResponse;
   bookBarSeat(state: State):State | ErrorResponse;
   bookTable(state: State, seatsRequired: number): State | ErrorResponse;
-  changeSeatingStatus<SeatingArray extends IRestaurantTable[] | IBarSeat[]>(
-    seatingState: SeatingArray,
+  changeSeatingStatus(
+    seatingState: IRestaurantTable[] | IBarSeat[],
     payload: IchangeSeatingStatus
-  ): SeatingArray;
+  ): IRestaurantTable[] | IBarSeat[];
   makeBarSeatAvailable(bar: IBarSeat[], barSeatNumber: number): IBarSeat[];
   totalTableSeats(tables: IRestaurantTable[]): Number;
 }

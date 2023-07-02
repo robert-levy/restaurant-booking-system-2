@@ -35,10 +35,10 @@ const reducer = (state: State, action: Action): State => {
     case ActionTypes.CHANGE_SEATING_STATUS:
       const { type, spaceNumber, newStatus } = action.payload;
       const seatingState = type === "tables" ? state.tables : state.bar;
-      updatedState = restaurant.changeSeatingStatus(seatingState, {
+      updatedState = restaurant.changeSeatingStatus<IRestaurantTable | IBarSeat>(seatingState, {
         spaceNumber,
         newStatus,
-      });
+      }) as (IRestaurantTable[] | IBarSeat[]);;
       return {
         ...state,
         [type]: updatedState,
