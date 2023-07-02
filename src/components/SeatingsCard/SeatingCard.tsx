@@ -107,6 +107,7 @@ const SeatingCard = ({
     setAnchorEl(null);
   };
 
+  // Todo: turn these three functions into one
   const handleMakeAvailable = (type: ICardType) => {
     if (availability !== Availability.Available) {
       dispatch(changeSeatingStatus(spaceNumber, type, Availability.Available));
