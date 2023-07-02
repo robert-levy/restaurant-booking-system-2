@@ -99,10 +99,6 @@ export default class Restaurant implements IRestaurant {
     { spaceNumber, newStatus }: IchangeSeatingStatus
   ): T[] {
     let updatedSeatingState = [...seatingState];
-
-    // const seatingNumberProperty = "tableNumber" in seatingState[0] ? "tableNumber" : "barSeatNumber"
-    // const foundSpace = seatingState.find((space) => (space as any)[seatingNumberProperty] === spaceNumber)
-
     updatedSeatingState = seatingState.map((space) => {
       if ("tableNumber" in space && space.tableNumber === spaceNumber) {
         return { ...space, availability: newStatus };

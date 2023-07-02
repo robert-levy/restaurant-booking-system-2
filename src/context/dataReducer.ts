@@ -38,7 +38,7 @@ const reducer = (state: State, action: Action): State => {
       updatedState = restaurant.changeSeatingStatus<IRestaurantTable | IBarSeat>(seatingState, {
         spaceNumber,
         newStatus,
-      }) as (IRestaurantTable[] | IBarSeat[]);;
+      }) as typeof seatingState;
       return {
         ...state,
         [type]: updatedState,
