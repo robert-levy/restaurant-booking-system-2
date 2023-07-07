@@ -79,7 +79,7 @@ const WelcomeScreen: React.FC<IWelcomeModal> = ({ setBranchName }) => {
             id="restaurant-name-field"
             label="Required"
             defaultValue="Nandos Shoreditch"
-            data-testid="restaurant-name-input-test"
+            inputProps={{ "data-testid":"restaurant-name-input-test" }}
           />
           <IconButton
             aria-label="CheckCircleIcon"

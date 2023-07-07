@@ -23,7 +23,6 @@ exports[`WelcomeScreen.tsx snapshot test 1`] = `
     >
       <div
         className="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
-        data-testid="restaurant-name-input-test"
       >
         <label
           className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
@@ -48,6 +47,7 @@ exports[`WelcomeScreen.tsx snapshot test 1`] = `
             aria-invalid={false}
             autoFocus={false}
             className="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+            data-testid="restaurant-name-input-test"
             defaultValue="Nandos Shoreditch"
             disabled={false}
             id="restaurant-name-field"
